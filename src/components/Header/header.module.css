@@ -1,0 +1,59 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.logo {
+  width: 6rem;
+  height: 4rem;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  margin-left: auto;
+}
+
+.link {
+  user-select: none;
+  cursor: pointer;
+  color: #d9a273;
+  font-size: 1.1rem;
+  text-decoration: none;
+  margin: 0;
+  transition: 0.25s;
+}
+
+.link:hover {
+  transform: scale(0.95);
+}
+
+.icon {
+  width: 2rem;
+  height: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .nav {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .nav {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
