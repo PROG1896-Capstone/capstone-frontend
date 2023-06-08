@@ -36,7 +36,7 @@ export const Header = () => {
   ];
 
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <Image className={styles.logo} src={iconLogo} alt="sunset-bistro-logo" />
       <nav className={styles.nav}>
         {headerLinks.map((link) => (
@@ -45,7 +45,7 @@ export const Header = () => {
           </Link>
         ))}
       </nav>
-    </div>
+    </header>
   );
 };
 
