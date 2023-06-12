@@ -26,7 +26,7 @@ export const Home = () => {
           <Image className={styles.img} src={imgHomeSubs} alt="img-home-subs" />
         </div>
       </div>
-      <div className={styles.row}>
+      <div className={styles.row} id={styles.second_row}>
         <div className={styles.column}>
           <Image
             className={styles.img}

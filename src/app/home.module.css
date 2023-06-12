@@ -35,13 +35,14 @@
 
 .paragraph {
   color: #66a3d9;
-  max-width: 30rem;
+  max-width: 25rem;
   font-size: 1rem;
   margin: 1rem 0 0 0;
 }
 
 .img {
-  width: 30rem;
+  width: 100%;
+  max-width: 30rem;
   height: 20rem;
 }
 
@@ -58,4 +59,23 @@
   border: none;
   border-radius: 2rem;
   padding: 1rem;
+}
+
+@media (max-width: 800px) {
+  .page {
+    gap: 2rem;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  #second_row {
+    flex-direction: column-reverse;
+  }
+
+  .column {
+    align-items: center;
+    text-align: center;
+  }
 }
