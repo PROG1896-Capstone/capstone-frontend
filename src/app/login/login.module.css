@@ -26,21 +26,23 @@
 }
 
 .input_box {
+  align-self: stretch;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
   gap: 2rem;
 }
 
 .label {
+  white-space: nowrap;
   color: #d9a273;
   font-size: 1.1rem;
 }
 
 .input {
   width: 100%;
-  max-width: 10rem;
+  max-width: 9rem;
   padding: 0.25rem;
 }
 
