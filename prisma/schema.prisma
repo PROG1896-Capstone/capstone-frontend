@@ -9,3 +9,91 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Account {
+  id                String  @id @default(cuid())
+  UserId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [UserId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  UserId       String
+  expires      DateTime
+  user         User     @relation(fields: [UserId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String?    @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  Order         Order[]
+  Employee      Employee[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model MenuItem {
+  id            Int         @id @default(autoincrement())
+  Name          String
+  Description   String      @db.Text
+  Price         Decimal     @db.Decimal(65, 2)
+  CategoryGroup String
+  InsertedAt    DateTime    @default(now())
+  UpdatedAt     DateTime?   @updatedAt
+  OrderItem     OrderItem[]
+}
+
+model OrderItem {
+  id         Int       @id @default(autoincrement())
+  MenuItemId Int
+  Quantity   Int
+  Note       String?   @db.Text
+  InsertedAt DateTime  @default(now())
+  UpdatedAt  DateTime? @updatedAt
+  MenuItem   MenuItem  @relation(fields: [MenuItemId], references: [id])
+}
+
+model Order {
+  id         Int       @id @default(autoincrement())
+  UserId     String
+  Status     String
+  InsertedAt DateTime  @default(now())
+  UpdatedAt  DateTime? @updatedAt
+  User       User      @relation(fields: [UserId], references: [id])
+}
+
+model Employee {
+  id         Int       @id @default(autoincrement())
+  UserId     String
+  Active     Boolean
+  Position   String
+  Role       String
+  InsertedAt DateTime  @default(now())
+  UpdatedAt  DateTime? @updatedAt
+  User       User      @relation(fields: [UserId], references: [id])
+}

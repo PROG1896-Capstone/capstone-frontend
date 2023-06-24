@@ -1,36 +1,73 @@
-const getMenuItems = async (menuItemId) => {
+import prisma from "../../db/prisma";
+
+const getMenuItem = async (menuItemId) => {
   try {
     if (!menuItemId) {
-      console.log("Throw item not found error or return null");
+      console.log("A menu item id is required");
     }
-    console.log("select menu item by Id");
-    if ("not found") {
-      console.log("Throw item not found error or return null");
+    const menuItem = await prisma.menuItem.findFirst({
+      where: {id: parseInt(menuItemId)}
+    });
+    if (!menuItem) {
+      console.log("Item not found");
     }
-    return;
-  } catch (error) {}
+    return menuItem;
+  } catch (error) {
+    console.error(error)
+  }
 };
 
 const getAllMenuItems = async () => {
-  try {
-    console.log("select all menu items"); 
-    if ("not found") {
-      console.log("Throw item not found error or return null");
+    try {
+      const menuItems = await prisma.menuItem.findMany({
+        select:{
+        id: true,
+        Name: true,
+        Description:true,
+        Price: true,
+        InsertedAt: true,
+        UpdatedAt:true}
+      });
+      return menuItems
+    } catch (error) {
+      console.error(error)
     }
-
-    return;
-  } catch (error) {}
 };
 
 const createMenuItem = async (name, desc, price,category) => {
   try {
-    if ("not found") {
-      console.log("Throw item not found error or return null");
-    }
-    console.log("select all menu items");
-    return;
-  } catch (error) {}
+    const menuItem = await prisma.menuItem.create({
+      data:{
+        Name: name,
+        Description: desc,
+        Price: price,
+        CategoryGroup: category,
+      }
+    })
+    return menuItem
+  } catch (error) {
+    console.error(error)
+  }
+
 };
+
+const updateMenuItem = async (id, name, desc, price,category) => {
+  try {
+    const menuItem = await prisma.menuItem.update({
+      where:{id: id},
+      data:{
+        Name: name,
+        Description: desc,
+        Price: price,
+        CategoryGroup: category,
+      }
+    })
+    return menuItem;
+  } catch (error) {
+    console.error(error)
+  }
+};
+
 
 const deleteMenuItem = async (name, desc, price,category) => {
   try {
@@ -44,9 +81,10 @@ const deleteMenuItem = async (name, desc, price,category) => {
 
 
 export const menuItemService = {
-  getMenuItems,
+  getMenuItem,
   getAllMenuItems,
   createMenuItem,
-  deleteMenuItem
+  deleteMenuItem,
+  updateMenuItem
   
 }
