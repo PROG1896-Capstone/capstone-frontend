@@ -39,8 +39,9 @@ model Session {
 
 model User {
   id            String     @id @default(cuid())
-  name          String?
-  email         String?    @unique
+  name          String
+  email         String     @unique
+  password      String
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -65,26 +66,29 @@ model MenuItem {
   CategoryGroup String
   InsertedAt    DateTime    @default(now())
   UpdatedAt     DateTime?   @updatedAt
-  OrderItem     OrderItem[]
+  OrderItems    OrderItem[]
 }
 
 model OrderItem {
   id         Int       @id @default(autoincrement())
   MenuItemId Int
+  OrderId    Int
   Quantity   Int
   Note       String?   @db.Text
   InsertedAt DateTime  @default(now())
   UpdatedAt  DateTime? @updatedAt
   MenuItem   MenuItem  @relation(fields: [MenuItemId], references: [id])
+  Order      Order     @relation(fields: [OrderId], references: [id])
 }
 
 model Order {
-  id         Int       @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   UserId     String
-  Status     String
-  InsertedAt DateTime  @default(now())
-  UpdatedAt  DateTime? @updatedAt
-  User       User      @relation(fields: [UserId], references: [id])
+  Status     String      @default("Submitted")
+  InsertedAt DateTime    @default(now())
+  UpdatedAt  DateTime?   @updatedAt
+  User       User        @relation(fields: [UserId], references: [id])
+  OrderItems OrderItem[]
 }
 
 model Employee {
