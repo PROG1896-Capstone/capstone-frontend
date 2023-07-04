@@ -7,6 +7,7 @@
   background: url("../assets/img-home-burgers.png");
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
 }
 
 .page_container {
