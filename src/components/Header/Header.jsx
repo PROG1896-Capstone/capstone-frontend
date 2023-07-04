@@ -6,7 +6,7 @@ import iconAccount from "@/assets/icon-account.svg";
 import styles from "./header.module.css";
 
 export const Header = () => {
-  const headerLinks = [
+  const textLinks = [
     {
       href: "/",
       label: "Home",
@@ -23,6 +23,9 @@ export const Header = () => {
       href: "/contact",
       label: "Contact Us",
     },
+  ];
+
+  const iconLinks = [
     {
       href: "/",
       label: <Image className={styles.icon} src={iconCart} alt="icon-cart" />,
@@ -39,11 +42,20 @@ export const Header = () => {
     <header className={styles.header}>
       <Image className={styles.logo} src={iconLogo} alt="sunset-bistro-logo" />
       <nav className={styles.nav}>
-        {headerLinks.map((link) => (
-          <Link className={styles.link} href={link.href}>
-            {link.label}
-          </Link>
-        ))}
+        <div className={styles.text_links}>
+          {textLinks.map((link) => (
+            <Link className={styles.link} href={link.href}>
+              {link.label}
+            </Link>
+          ))}
+        </div>
+        <div className={styles.icon_links}>
+          {iconLinks.map((link) => (
+            <Link className={styles.link} href={link.href}>
+              {link.label}
+            </Link>
+          ))}
+        </div>
       </nav>
     </header>
   );
