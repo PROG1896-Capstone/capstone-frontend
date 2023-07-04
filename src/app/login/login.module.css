@@ -16,7 +16,6 @@
   justify-content: flex-start;
   align-items: center;
   gap: 1rem;
-  background-color: #f2e5bd;
   padding: 3rem;
 }
 
@@ -41,9 +40,11 @@
 }
 
 .input {
+  flex-shrink: 0;
   width: 100%;
-  max-width: 9rem;
-  padding: 0.25rem;
+  max-width: 10rem;
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
 
 .submit {
@@ -67,6 +68,7 @@
   text-align: center;
   user-select: none;
   cursor: pointer;
+  color: #457abf;
   text-decoration: none;
 }
 
