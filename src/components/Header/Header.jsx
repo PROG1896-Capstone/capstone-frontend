@@ -12,7 +12,7 @@ export const Header = () => {
       label: "Home",
     },
     {
-      href: "/",
+      href: "/menu",
       label: "Menu",
     },
     {
@@ -27,7 +27,7 @@ export const Header = () => {
 
   const iconLinks = [
     {
-      href: "/",
+      href: "/cart",
       label: <Image className={styles.icon} src={iconCart} alt="icon-cart" />,
     },
     {
