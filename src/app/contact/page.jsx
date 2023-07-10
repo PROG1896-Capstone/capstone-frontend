@@ -56,6 +56,11 @@ export const Contact = () => {
 
   return (
     <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.title_container}>
+          <h1 className={styles.title}>Sunset Bistro</h1>
+        </div>
+      </div>
       <div className={styles.contact}>
         <h1 className={styles.heading}>Contact Us</h1>
         <div className={styles.info_box}>

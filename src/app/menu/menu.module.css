@@ -1,0 +1,41 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  background: url("../../assets/bg-blue-splash.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 1rem 4rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+}
+
+.heading {
+  color: #707070;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .page {
+    padding: 1rem;
+    align-items: center;
+  }
+
+  .items {
+    grid-template-columns: 1fr;
+    padding-bottom: 2rem;
+  }
+}

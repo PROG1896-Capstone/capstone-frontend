@@ -7,20 +7,6 @@ import iconYouTube from "@/assets/icon-youtube.svg";
 import styles from "./footer.module.css";
 
 export const Footer = () => {
-  const footerLinks = [
-    {
-      href: "/",
-      label: "Menu",
-    },
-    {
-      href: "/about",
-      label: "About Us",
-    },
-    {
-      href: "/contact",
-      label: "Contact Us",
-    },
-  ];
   const footerIcons = [
     { src: iconInstagram, alt: "icon-instagram" },
     { src: iconFacebook, alt: "icon-facebook" },
@@ -30,13 +16,6 @@ export const Footer = () => {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.links}>
-        {footerLinks.map((link) => (
-          <Link className={styles.link} href={link.href}>
-            {link.label}
-          </Link>
-        ))}
-      </div>
       <div className={styles.container}>
         <p className={styles.copyright}>
           TM & Copyright 2023 Sunset Bistro. All Rights Reserved.

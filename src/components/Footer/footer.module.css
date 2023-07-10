@@ -4,18 +4,8 @@
   justify-content: flex-start;
   align-items: center;
   gap: 3rem;
-  background-color: #d9a273;
+  background-color: rgba(85, 85, 85, 0.75);
   padding: 2rem;
-}
-
-.links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
-  gap: 2rem;
-  width: 100%;
 }
 
 .link {
@@ -75,11 +65,5 @@
 
   .container {
     flex-direction: column-reverse;
-  }
-}
-
-@media (max-width: 350px) {
-  .links {
-    flex-direction: column;
   }
 }

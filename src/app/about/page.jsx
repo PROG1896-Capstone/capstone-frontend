@@ -5,10 +5,7 @@ import styles from "./about.module.css";
 export const About = () => {
   return (
     <div className={styles.page}>
-      <div className={styles.column}>
-        <Image className={styles.img} src={imgAbout} alt="img-about" />
-      </div>
-      <div className={styles.column}>
+      <div className={styles.container}>
         <h1 className={styles.heading}>Our Story!</h1>
         <p className={styles.paragraph}>
           Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam

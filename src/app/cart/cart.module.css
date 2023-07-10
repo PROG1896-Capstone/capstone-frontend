@@ -1,0 +1,27 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: url("../../assets/bg-blue-splash.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 3rem 1rem;
+}
+
+.cart {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  justify-items: center;
+  row-gap: 2rem;
+  column-gap: 0.5rem;
+  width: 100%;
+  border-top: 0.1rem solid #000000;
+  padding-top: 2rem;
+}
+
+.heading {
+  text-align: center;
+  margin: 0;
+}
