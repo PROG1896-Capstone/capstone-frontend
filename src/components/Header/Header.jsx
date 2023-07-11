@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import iconLogo from "@/assets/sunset-bistro-logo.jpeg";
+import iconLogo from "@/assets/sunset-bistro-logo.png";
 import iconCart from "@/assets/icon-cart.svg";
 import iconAccount from "@/assets/icon-account.svg";
 import styles from "./header.module.css";

@@ -9,9 +9,9 @@ const createOrder = async (order) => {
             id: order.UserId
           }
         },
-        OrderItems: {
+        orderItems: {
           createMany: {
-            data: [...order.OrderItems]
+            data: [...order.orderItems]
           },
         },
       },
@@ -26,10 +26,10 @@ const getAllUserOrders = async(userId) =>{
   try {
     const order = await prisma.Order.findMany({
       where: {
-        UserId: userId,
+        userId: userId,
       },  
       include:{
-        OrderItems:true
+        orderItems:true
       }    
     })
     return order
@@ -45,7 +45,7 @@ const getOrder = async(orderId) =>{
         id: parseInt(orderId),
       },  
       include:{
-        OrderItems:true
+        orderItems:true
       }    
     })
     return order

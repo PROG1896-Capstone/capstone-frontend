@@ -22,11 +22,11 @@ const getAllMenuItems = async () => {
       const menuItems = await prisma.menuItem.findMany({
         select:{
         id: true,
-        Name: true,
-        Description:true,
-        Price: true,
-        InsertedAt: true,
-        UpdatedAt:true}
+        name: true,
+        description:true,
+        price: true,
+        insertedAt: true,
+        updatedAt:true}
       });
       return menuItems
     } catch (error) {
@@ -38,10 +38,10 @@ const createMenuItem = async (name, desc, price,category) => {
   try {
     const menuItem = await prisma.menuItem.create({
       data:{
-        Name: name,
-        Description: desc,
-        Price: price,
-        CategoryGroup: category,
+        name: name,
+        description: desc,
+        price: price,
+        categoryGroup: category,
       }
     })
     return menuItem
@@ -56,10 +56,10 @@ const updateMenuItem = async (id, name, desc, price,category) => {
     const menuItem = await prisma.menuItem.update({
       where:{id: id},
       data:{
-        Name: name,
-        Description: desc,
-        Price: price,
-        CategoryGroup: category,
+        name: name,
+        description: desc,
+        price: price,
+        categoryGroup: category,
       }
     })
     return menuItem;

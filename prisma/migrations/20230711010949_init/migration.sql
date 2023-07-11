@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `Account` (
     `id` VARCHAR(191) NOT NULL,
-    `UserId` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
     `type` VARCHAR(191) NOT NULL,
     `provider` VARCHAR(191) NOT NULL,
     `providerAccountId` VARCHAR(191) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE `Account` (
 CREATE TABLE `Session` (
     `id` VARCHAR(191) NOT NULL,
     `sessionToken` VARCHAR(191) NOT NULL,
-    `UserId` VARCHAR(191) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
     `expires` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Session_sessionToken_key`(`sessionToken`),
@@ -31,8 +31,9 @@ CREATE TABLE `Session` (
 -- CreateTable
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
-    `name` VARCHAR(191) NULL,
-    `email` VARCHAR(191) NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
     `emailVerified` DATETIME(3) NULL,
     `image` VARCHAR(191) NULL,
 
@@ -53,12 +54,12 @@ CREATE TABLE `VerificationToken` (
 -- CreateTable
 CREATE TABLE `MenuItem` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `Name` VARCHAR(191) NOT NULL,
-    `Description` TEXT NOT NULL,
-    `Price` DECIMAL(65, 30) NOT NULL,
-    `CategoryGroup` VARCHAR(191) NOT NULL,
-    `InsertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `UpdatededAt` DATETIME(3) NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `description` TEXT NOT NULL,
+    `price` DECIMAL(65, 2) NOT NULL,
+    `categoryGroup` VARCHAR(191) NOT NULL,
+    `insertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -66,11 +67,12 @@ CREATE TABLE `MenuItem` (
 -- CreateTable
 CREATE TABLE `OrderItem` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `MenuItemId` INTEGER NOT NULL,
-    `Quantity` INTEGER NOT NULL,
-    `Note` TEXT NULL,
-    `InsertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `UpdatedAt` DATETIME(3) NULL,
+    `menuItemId` INTEGER NOT NULL,
+    `orderId` INTEGER NOT NULL,
+    `quantity` INTEGER NOT NULL,
+    `note` TEXT NULL,
+    `insertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -78,10 +80,10 @@ CREATE TABLE `OrderItem` (
 -- CreateTable
 CREATE TABLE `Order` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `UserId` VARCHAR(191) NOT NULL,
-    `Status` VARCHAR(191) NOT NULL,
-    `InsertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `UpdatedAt` DATETIME(3) NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `Status` VARCHAR(191) NOT NULL DEFAULT 'Submitted',
+    `insertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -89,27 +91,30 @@ CREATE TABLE `Order` (
 -- CreateTable
 CREATE TABLE `Employee` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `UserId` VARCHAR(191) NOT NULL,
-    `Active` BOOLEAN NOT NULL,
-    `Position` VARCHAR(191) NOT NULL,
-    `Role` VARCHAR(191) NOT NULL,
-    `InsertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `UpdatedAt` DATETIME(3) NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `active` BOOLEAN NOT NULL DEFAULT true,
+    `position` VARCHAR(191) NOT NULL,
+    `role` VARCHAR(191) NOT NULL,
+    `insertedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Account` ADD CONSTRAINT `Account_UserId_fkey` FOREIGN KEY (`UserId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Account` ADD CONSTRAINT `Account_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Session` ADD CONSTRAINT `Session_UserId_fkey` FOREIGN KEY (`UserId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Session` ADD CONSTRAINT `Session_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `OrderItem` ADD CONSTRAINT `OrderItem_MenuItemId_fkey` FOREIGN KEY (`MenuItemId`) REFERENCES `MenuItem`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `OrderItem` ADD CONSTRAINT `OrderItem_menuItemId_fkey` FOREIGN KEY (`menuItemId`) REFERENCES `MenuItem`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Order` ADD CONSTRAINT `Order_UserId_fkey` FOREIGN KEY (`UserId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `OrderItem` ADD CONSTRAINT `OrderItem_orderId_fkey` FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Employee` ADD CONSTRAINT `Employee_UserId_fkey` FOREIGN KEY (`UserId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Order` ADD CONSTRAINT `Order_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Employee` ADD CONSTRAINT `Employee_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
