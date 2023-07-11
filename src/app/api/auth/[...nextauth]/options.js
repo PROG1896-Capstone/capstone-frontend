@@ -1,11 +1,10 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import z from "zod";
-
-const loginUSerSchema = z.object({
-  password: z.string().min(5, "Password should be minimum 5 characters"),
-});
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import prisma from "../../../db/prisma";
+import {userService} from "../../user/userService"
 
 export const authOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -22,25 +21,21 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-        // This is where you need to retrieve user data
-        // to verify with credentials
-        // Docs: https://next-auth.js.org/configuration/providers/credentials
-        const user = { id: "42", name: "test@email.com", password: "nextauth" };
-
-        if (
-          credentials?.username === user.name &&
-          credentials?.password === user.password
-        ) {
-          return user;
-        } else {
-          return null;
-        }
+      const user = await userService.signIn(credentials.username, credentials.password) 
+      
+      // If no error and we have user data, return it
+      if (!user.error) {
+        return user
+      }
+      // Return null if user data could not be retrieved
+      return null
       },
     }),
+
   ],
-//   pages: {
-//     signIn: "/login",
-//   },
+  // pages: {
+  //   signIn: "/login",
+  // },
 };
 
 // const authOptions = {
