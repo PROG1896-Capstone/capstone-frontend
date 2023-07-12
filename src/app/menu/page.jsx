@@ -1,40 +1,17 @@
+"use client";
+import { useState, useEffect } from "react";
 import MenuItem from "@/components/MenuItem/MenuItem";
 import styles from "./menu.module.css";
 import imgMenuItem from "@/assets/img-menu-item.png";
 
 export const Menu = () => {
-  const menuItems = [
-    {
-      imgSrc: imgMenuItem,
-      imgAlt: "img-menu-item",
-      label: "Lorem Ipsum",
-    },
-    {
-      imgSrc: imgMenuItem,
-      imgAlt: "img-menu-item",
-      label: "Lorem Ipsum",
-    },
-    {
-      imgSrc: imgMenuItem,
-      imgAlt: "img-menu-item",
-      label: "Lorem Ipsum",
-    },
-    {
-      imgSrc: imgMenuItem,
-      imgAlt: "img-menu-item",
-      label: "Lorem Ipsum",
-    },
-    {
-      imgSrc: imgMenuItem,
-      imgAlt: "img-menu-item",
-      label: "Lorem Ipsum",
-    },
-    {
-      imgSrc: imgMenuItem,
-      imgAlt: "img-menu-item",
-      label: "Lorem Ipsum",
-    },
-  ];
+  let [menuItems, setMenuItems] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/menuItem")
+      .then((response) => response.json())
+      .then((data) => setMenuItems(data.data));
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -43,9 +20,10 @@ export const Menu = () => {
         <div className={styles.items}>
           {menuItems.map((item) => (
             <MenuItem
-              imgSrc={item.imgSrc}
-              imgAlt={item.imgAlt}
-              label={item.label}
+              key={item.id}
+              imgSrc={imgMenuItem}
+              imgAlt="img-menu-item"
+              label={item.name}
             />
           ))}
         </div>
