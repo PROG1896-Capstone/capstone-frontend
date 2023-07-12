@@ -10,7 +10,8 @@ export const Menu = () => {
   useEffect(() => {
     fetch("http://localhost:3000/api/menuItem")
       .then((response) => response.json())
-      .then((data) => setMenuItems(data.data));
+      .then((data) => setMenuItems(data.data))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
