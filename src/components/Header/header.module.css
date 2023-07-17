@@ -5,7 +5,7 @@
   align-items: center;
   gap: 3rem;
   background-color: rgba(85, 85, 85, 0.75);
-  padding: 2rem;
+  padding: 1rem 2rem;
 }
 
 .logo {
@@ -64,6 +64,7 @@
 @media (max-width: 700px) {
   .header {
     flex-direction: column;
+    padding: 2rem;
   }
 
   .nav {
