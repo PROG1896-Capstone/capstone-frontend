@@ -2,40 +2,45 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-end;
-  background: url("../../assets/bg-blue-splash.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  padding: 1rem 4rem;
+  align-items: stretch;
+  padding: 2rem;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  gap: 1rem;
-}
-
-.heading {
-  color: #707070;
-}
-
-.items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: 2rem;
 }
 
-@media (max-width: 700px) {
+.heading {
+  margin: 0;
+}
+
+.subheading {
+  margin: 0;
+}
+
+.items {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+@media (max-width: 550px) {
   .page {
-    padding: 1rem;
+    padding: 2rem 1rem;
+  }
+
+  .container {
     align-items: center;
   }
 
   .items {
-    grid-template-columns: 1fr;
-    padding-bottom: 2rem;
+    justify-content: center;
   }
 }

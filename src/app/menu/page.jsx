@@ -17,14 +17,30 @@ export const Menu = () => {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <h1 className={styles.heading}>Select From Our Delicacies</h1>
+        <h1 className={styles.heading}>Our Menu</h1>
+        <h2 className={styles.subheading}>Burgers</h2>
         <div className={styles.items}>
           {menuItems.map((item) => (
             <MenuItem
               key={item.id}
               imgSrc={imgMenuItem}
               imgAlt="img-menu-item"
-              label={item.name}
+              name={item.name}
+              description={item.description}
+              price={item.price}
+            />
+          ))}
+        </div>
+        <h2 className={styles.subheading}>Sandwiches</h2>
+        <div className={styles.items}>
+          {menuItems.map((item) => (
+            <MenuItem
+              key={item.id}
+              imgSrc={imgMenuItem}
+              imgAlt="img-menu-item"
+              name={item.name}
+              description={item.description}
+              price={item.price}
             />
           ))}
         </div>
