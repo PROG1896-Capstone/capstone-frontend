@@ -67,15 +67,8 @@
   transform: scale(0.95);
 }
 
-.links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-}
-
 .link {
+  align-self: flex-start;
   text-align: center;
   user-select: none;
   cursor: pointer;

@@ -33,7 +33,7 @@ export const Login = () => {
           <Link className={styles.link} href="/">
             Forgot Password?
           </Link>
-          <Link className={styles.link} href="/">
+          <Link className={styles.link} href="/signup">
             Don't have an account?
           </Link>
         </div>
