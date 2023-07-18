@@ -18,7 +18,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 1.5rem;
   margin-left: auto;
 }
 
@@ -37,9 +37,7 @@
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
-  background-color: #d9a273;
   border-radius: 2rem;
-  padding: 0.5rem 1rem;
 }
 
 .link {
@@ -64,7 +62,7 @@
 @media (max-width: 700px) {
   .header {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.75rem;
     padding: 2rem;
   }
 
@@ -78,7 +76,11 @@
     gap: 2.5rem;
   }
 
-  .nav,
+  .nav {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
   .text_links {
     flex-direction: column;
   }
