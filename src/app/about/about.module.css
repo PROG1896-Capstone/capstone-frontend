@@ -1,10 +1,14 @@
 .page {
   display: grid;
   grid-template: 1fr / 1fr 1fr;
+}
+
+.img_container {
+  grid-area: 1 / 1 / span 1 / span 1;
   background: url("../../assets/img-about.png");
-  background-size: 135%;
-  background-position: center;
   background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .container {
@@ -42,6 +46,7 @@
     grid-template: 1fr 1fr / 1fr;
   }
 
+  .img_container,
   .container {
     grid-area: 1 / 1 / span 2 / span 1;
   }
