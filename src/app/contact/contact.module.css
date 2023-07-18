@@ -1,82 +1,33 @@
 .page {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  background: url("../../assets/bg-contact.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.title_container {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.375);
-  padding: 12.5rem 2rem;
+  gap: 2rem;
+  padding: 2rem;
 }
 
-.title {
-  color: #ffffff;
-  font-size: 3rem;
-  line-height: 3rem;
-  margin: 0;
+.img {
+  width: 50%;
+  max-width: 40rem;
+  height: auto;
 }
 
 .contact {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
-  gap: 1rem;
-  background-color: #f2e5bd;
-  padding: 3rem 5rem;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem;
 }
 
 .heading {
-  color: #457abf;
   margin: 0;
 }
 
-.info_box {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.info {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 2rem;
-}
-
-.icon {
-  width: 2rem;
-}
-
-.info_text {
-  max-width: 15rem;
-  color: #66a3d9;
-  font-size: 1.175rem;
-  font-weight: 600;
+.subheading {
   margin: 0;
-}
-
-.small_heading {
-  color: #457abf;
 }
 
 .times {
@@ -97,7 +48,6 @@
 
 .day {
   flex-grow: 1;
-  color: #66a3d9;
   font-size: 1.1rem;
   margin: 0;
 }
@@ -112,17 +62,49 @@
 
 .hours {
   flex-grow: 1;
-  color: #66a3d9;
   font-size: 1.1rem;
   margin: 0;
 }
 
-@media (max-width: 600px) {
+.info_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.icon {
+  width: 2rem;
+  filter: brightness(0);
+}
+
+.info_text {
+  max-width: 15rem;
+  font-size: 1.175rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
   .page {
+    flex-direction: column;
     justify-content: center;
   }
 
+  .img {
+    width: 100%;
+  }
+
   .contact {
+    align-items: center;
     width: 100%;
     padding-inline: 2rem;
   }

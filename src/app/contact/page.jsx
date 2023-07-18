@@ -1,4 +1,5 @@
 import Image from "next/image";
+import imgContact from "@/assets/img-contact.png";
 import iconEmail from "@/assets/icon-email.svg";
 import iconPhone from "@/assets/icon-phone.svg";
 import iconLocation from "@/assets/icon-location.svg";
@@ -56,26 +57,10 @@ export const Contact = () => {
 
   return (
     <div className={styles.page}>
-      <div className={styles.container}>
-        <div className={styles.title_container}>
-          <h1 className={styles.title}>Sunset Bistro</h1>
-        </div>
-      </div>
+      <Image className={styles.img} src={imgContact} alt="img-contact" />
       <div className={styles.contact}>
         <h1 className={styles.heading}>Contact Us</h1>
-        <div className={styles.info_box}>
-          {info.map((info) => (
-            <div className={styles.info}>
-              <Image
-                className={styles.icon}
-                src={info.iconSrc}
-                alt={info.iconAlt}
-              />
-              <p className={styles.info_text}>{info.text}</p>
-            </div>
-          ))}
-        </div>
-        <h3 className={styles.small_heading}>Timings</h3>
+        <h3 className={styles.subheading}>Store Hours</h3>
         <div className={styles.times}>
           <div className={styles.days_box}>
             {times.map((time) => (
@@ -87,6 +72,18 @@ export const Contact = () => {
               <p className={styles.hours}>{time.hours}</p>
             ))}
           </div>
+        </div>
+        <div className={styles.info_box}>
+          {info.map((info) => (
+            <div className={styles.info}>
+              <Image
+                className={styles.icon}
+                src={info.iconSrc}
+                alt={info.iconAlt}
+              />
+              <p className={styles.info_text}>{info.text}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
