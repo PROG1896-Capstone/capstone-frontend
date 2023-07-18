@@ -5,7 +5,7 @@ export const Login = () => {
   return (
     <div className={styles.page}>
       <form className={styles.form}>
-        <h1 className={styles.heading}>Login</h1>
+        <h1 className={styles.heading}>Sign In</h1>
         <div className={styles.input_box}>
           <label className={styles.label} htmlFor="login_email">
             Your Email
@@ -28,13 +28,15 @@ export const Login = () => {
             id="login_password"
           />
         </div>
-        <input className={styles.submit} type="submit" value="Login" />
-        <Link className={styles.link} href="/">
-          Forgot Password?
-        </Link>
-        <Link className={styles.link} href="/">
-          Don't have an account?
-        </Link>
+        <input className={styles.submit} type="submit" value="Sign In" />
+        <div className={styles.links}>
+          <Link className={styles.link} href="/">
+            Forgot Password?
+          </Link>
+          <Link className={styles.link} href="/">
+            Don't have an account?
+          </Link>
+        </div>
       </form>
     </div>
   );
