@@ -33,12 +33,14 @@ export const Header = () => {
     {
       href: "/cart",
       label: <Image className={styles.icon} src={iconCart} alt="icon-cart" />,
+      key: "header_link_cart",
     },
     {
       href: "/login",
       label: (
         <Image className={styles.icon} src={iconAccount} alt="icon-account" />
       ),
+      key: "header_link_login",
     },
   ];
 
@@ -72,14 +74,18 @@ export const Header = () => {
         <nav className={styles.nav}>
           <div className={styles.text_links}>
             {textLinks.map((link) => (
-              <Link className={styles.link} href={link.href}>
+              <Link
+                className={styles.link}
+                href={link.href}
+                key={`header_link_${link.label}`}
+              >
                 {link.label}
               </Link>
             ))}
           </div>
           <div className={styles.icon_links}>
             {iconLinks.map((link) => (
-              <Link className={styles.link} href={link.href}>
+              <Link className={styles.link} href={link.href} key={link.key}>
                 {link.label}
               </Link>
             ))}
