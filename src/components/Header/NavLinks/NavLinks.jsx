@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import iconCart from "@/assets/icon-cart.svg";
@@ -5,6 +6,8 @@ import iconAccount from "@/assets/icon-account.svg";
 import styles from "./navLinks.module.css";
 
 const NavLinks = ({ className }) => {
+  const [currentPath, setCurrentPath] = useState("");
+
   const textLinks = [
     {
       href: "/",
@@ -39,13 +42,20 @@ const NavLinks = ({ className }) => {
     },
   ];
 
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  }, []);
+
   return (
     <nav className={`${styles.nav} ${className}`}>
       <div className={styles.text_links}>
         {textLinks.map((link) => (
           <Link
-            className={styles.link}
+            className={`${styles.link} ${
+              link.href === currentPath && styles.selected_tab
+            }`}
             href={link.href}
+            onClick={() => setCurrentPath(link.href)}
             key={`header_link_${link.label}`}
           >
             {link.label}
@@ -54,7 +64,12 @@ const NavLinks = ({ className }) => {
       </div>
       <div className={styles.icon_links}>
         {iconLinks.map((link) => (
-          <Link className={styles.link} href={link.href} key={link.key}>
+          <Link
+            className={styles.link}
+            href={link.href}
+            onClick={() => setCurrentPath(link.href)}
+            key={link.key}
+          >
             {link.label}
           </Link>
         ))}
