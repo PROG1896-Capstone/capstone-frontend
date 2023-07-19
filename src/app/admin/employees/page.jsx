@@ -7,21 +7,21 @@ const Employees = () => {
   const [employees, setEmployees] = useState([
     {
       id: 1,
-      name: "Employee Name",
+      name: "Employee Name 1",
       email: "test@email.com",
       role: "administrator",
       active: true,
     },
     {
       id: 2,
-      name: "Employee Name",
+      name: "Employee Name 2",
       email: "test@email.com",
       role: "administrator",
       active: true,
     },
     {
       id: 3,
-      name: "Employee Name",
+      name: "Employee Name 3",
       email: "test@email.com",
       role: "user",
       active: false,
@@ -32,6 +32,35 @@ const Employees = () => {
     let updatedEmployees = [...employees];
     updatedEmployees[index] = updatedEmployee;
     setEmployees(updatedEmployees);
+  };
+
+  const removeItem = (id) => {
+    const items = employees;
+    const result = items.filter((item) => item.id !== id);
+    setEmployees(result);
+  };
+
+  const [employeeKey, setEmployeeKey] = useState(2000);
+  const [employeeName, setEmployeeName] = useState("");
+  const [employeeEmail, setEmployeeEmail] = useState("");
+  const [employeeRole, setEmployeeRole] = useState("");
+
+  const addEmployee = (e) => {
+    e.preventDefault();
+
+    const newEmployee = {
+      id: employeeKey,
+      name: employeeName,
+      email: employeeEmail,
+      role: employeeRole,
+      active: true,
+    };
+
+    setEmployees([...employees, newEmployee]);
+    setEmployeeKey(employeeKey + 1);
+    setEmployeeName("");
+    setEmployeeEmail("");
+    setEmployeeRole("");
   };
 
   return (
@@ -49,25 +78,41 @@ const Employees = () => {
               updateEmployees={(updatedEmployee) =>
                 updateEmployees(updatedEmployee, index)
               }
+              remove={() => removeItem(employee.id)}
             />
           ))}
         </div>
         <button className={styles.btn}>Save</button>
       </div>
-      <form className={styles.add_box}>
+      <form className={styles.add_box} onSubmit={addEmployee}>
         <h4 className={styles.subheading}>Add Employee</h4>
+        <input
+          className={styles.input}
+          id="employee_name"
+          type="text"
+          name="employee_name"
+          value={employeeName}
+          onChange={(e) => setEmployeeName(e.target.value)}
+          placeholder="Employee Name"
+          required
+        />
         <input
           className={styles.input}
           id="employee_email"
           type="email"
           name="employee_email"
+          value={employeeEmail}
+          onChange={(e) => setEmployeeEmail(e.target.value)}
           placeholder="Employee Email"
+          required
         />
         <select
           className={styles.input}
           id="employee_role"
           name="employee_role"
-          defaultValue=""
+          value={employeeRole}
+          onChange={(e) => setEmployeeRole(e.target.value)}
+          required
         >
           <option value="" disabled>
             Role Name
@@ -75,7 +120,7 @@ const Employees = () => {
           <option value="administrator">Administrator</option>
           <option value="user">User</option>
         </select>
-        <button className={styles.btn}>Add Employee</button>
+        <input type="submit" className={styles.btn} value="Add Employee" />
       </form>
     </div>
   );

@@ -1,6 +1,8 @@
+import Image from "next/image";
+import iconMenuClose from "@/assets/icon-menu-close.svg";
 import styles from "./employeeInfo.module.css";
 
-const EmployeeInfo = ({ employeeData, updateEmployees }) => {
+const EmployeeInfo = ({ employeeData, updateEmployees, remove }) => {
   let info = employeeData;
 
   return (
@@ -34,15 +36,23 @@ const EmployeeInfo = ({ employeeData, updateEmployees }) => {
         <option value="administrator">Administrator</option>
         <option value="user">User</option>
       </select>
-      <input
-        className={styles.checkbox}
-        type="checkbox"
-        checked={info.active}
-        onChange={(e) => {
-          info.active = e.target.value;
-          updateEmployees(info);
-        }}
-      />
+      <div className={styles.container}>
+        <input
+          className={styles.checkbox}
+          type="checkbox"
+          checked={info.active}
+          onChange={(e) => {
+            info.active = !info.active;
+            updateEmployees(info);
+          }}
+        />
+        <Image
+          className={styles.delete}
+          src={iconMenuClose}
+          alt="icon-close"
+          onClick={remove}
+        />
+      </div>
     </div>
   );
 };

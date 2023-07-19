@@ -15,6 +15,29 @@
   border: none;
 }
 
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.delete {
+  width: 1.125rem;
+  height: auto;
+  user-select: none;
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(19%) sepia(52%) saturate(2701%)
+    hue-rotate(341deg) brightness(108%) contrast(100%);
+  transition: 0.25s;
+}
+
+.delete:hover {
+  transform: scale(0.95);
+}
+
 @media (max-width: 550px) {
   .info {
     display: flex;
