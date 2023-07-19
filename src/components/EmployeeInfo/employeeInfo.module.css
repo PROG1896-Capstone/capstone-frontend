@@ -1,0 +1,26 @@
+.info {
+  display: grid;
+  grid-template-columns: 2.5fr 2.25fr 1.25fr 1fr;
+  justify-items: flex-start;
+  gap: 2rem;
+  background-color: #ffffff;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 1rem;
+}
+
+.text {
+  width: 100%;
+  font-weight: 600;
+  border: none;
+}
+
+@media (max-width: 550px) {
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

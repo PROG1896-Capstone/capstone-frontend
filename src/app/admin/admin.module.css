@@ -1,0 +1,31 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.tab_select {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+  border-bottom: 0.1rem solid #cecece;
+  padding-bottom: 0.625rem;
+}
+
+.tab {
+  user-select: none;
+  cursor: pointer;
+  color: #000000;
+  text-decoration: none;
+  margin: 0;
+  transition: 0.25s;
+}
+
+.tab:hover {
+  transform: scale(0.95);
+}

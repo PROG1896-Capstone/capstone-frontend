@@ -1,0 +1,97 @@
+.page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.table {
+  display: grid;
+  grid-template-columns: 2.5fr 2.25fr 1.125fr 1.125fr;
+  justify-items: flex-start;
+  gap: 1rem 2rem;
+}
+
+.heading {
+  margin: 0;
+}
+
+.employees {
+  grid-column: 1 / span 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.add_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  gap: 1rem;
+  max-width: 20rem;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  padding: 2rem;
+}
+
+.subheading {
+  margin: 0;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  border-radius: 2rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 0.75rem 1rem;
+}
+
+.btn {
+  width: 100%;
+  user-select: none;
+  cursor: pointer;
+  background-color: #66a3d9;
+  color: #000000;
+  font-size: 0.925rem;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.75rem 2rem;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  transform: scale(0.95);
+}
+
+@media (max-width: 550px) {
+  .page {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .table {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  .heading {
+    display: none;
+  }
+
+  .employees {
+    gap: 1rem;
+  }
+
+  .add_box {
+    max-width: none;
+  }
+}
