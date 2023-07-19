@@ -66,9 +66,12 @@ const AdminMenu = () => {
           onChange={(e) => setSearchKey(e.target.value)}
           placeholder="Search"
         />
-        <button className={styles.btn} onClick={addProduct}>
-          Add Item
-        </button>
+        <div className={styles.btns}>
+          <button className={styles.add_btn} onClick={addProduct}>
+            Add Item
+          </button>
+          <button className={styles.save_btn}>Save Changes</button>
+        </div>
       </div>
       <div className={styles.table}>
         <h3 className={styles.heading}>Item Name</h3>
