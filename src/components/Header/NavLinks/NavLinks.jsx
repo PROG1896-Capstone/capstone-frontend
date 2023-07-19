@@ -6,8 +6,6 @@ import iconAccount from "@/assets/icon-account.svg";
 import styles from "./navLinks.module.css";
 
 const NavLinks = ({ className }) => {
-  const [currentPath, setCurrentPath] = useState("");
-
   const textLinks = [
     {
       href: "/",
@@ -41,6 +39,8 @@ const NavLinks = ({ className }) => {
       key: "header_link_login",
     },
   ];
+
+  const [currentPath, setCurrentPath] = useState("");
 
   useEffect(() => {
     setCurrentPath(window.location.pathname);

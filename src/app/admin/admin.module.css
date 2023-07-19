@@ -29,3 +29,7 @@
 .tab:hover {
   transform: scale(0.95);
 }
+
+.selected_tab {
+  font-weight: 600;
+}
