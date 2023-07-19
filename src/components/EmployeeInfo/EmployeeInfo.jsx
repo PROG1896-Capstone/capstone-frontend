@@ -41,7 +41,7 @@ const EmployeeInfo = ({ employeeData, updateEmployees, remove }) => {
           className={styles.checkbox}
           type="checkbox"
           checked={info.active}
-          onChange={(e) => {
+          onChange={() => {
             info.active = !info.active;
             updateEmployees(info);
           }}

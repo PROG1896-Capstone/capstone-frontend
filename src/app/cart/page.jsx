@@ -28,11 +28,9 @@ const Cart = () => {
     setSubtotal(subtotal + value);
   };
 
-  const removeItem = (index) => {
-    let items = cartItems;
-    const firstSlice = items.slice(0, index);
-    const secondSlice = items.slice(index + 1);
-    const result = firstSlice.concat(secondSlice);
+  const removeItem = (id) => {
+    const items = cartItems;
+    const result = items.filter((item) => item.id !== id);
     setCartItems(result);
   };
 
@@ -46,7 +44,7 @@ const Cart = () => {
               name={item.name}
               price={item.price}
               addSubtotal={addSubtotal}
-              remove={() => removeItem(index)}
+              remove={() => removeItem(item.id)}
               key={item.id}
             />
           ))}
