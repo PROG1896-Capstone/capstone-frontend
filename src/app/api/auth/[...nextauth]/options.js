@@ -12,12 +12,12 @@ export const authOptions = {
         username: {
           label: "Username:",
           type: "text",
-          placeholder: "your-cool-username",
+          placeholder: "username",
         },
         password: {
           label: "Password:",
           type: "password",
-          placeholder: "your-awesome-password",
+          placeholder: "password",
         },
       },
       async authorize(credentials) {

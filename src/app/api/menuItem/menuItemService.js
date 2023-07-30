@@ -1,90 +1,122 @@
-import prisma from "../../db/prisma";
+import prisma from "../../utils/prisma";
+import { writeFile } from 'fs/promises'
+import path from "path";
+
+const ImageExtensions = ["image/jpg", "image/png", "image/jpeg"];
+const imageDir = "/src/public/images"
+
+const saveImage = async (image, filename) => {
+  const imageExt = image.type.split("/").pop()
+  const imageName = `${Date.now()}-${filename.trim()}.${imageExt}`
+  try {
+    if (!ImageExtensions.includes(image.type)) {
+      return { error: "Not an image!" };
+    }
+    if (parseInt(image.size) > 15728640) {
+      return { error: "Image is too large!" };
+    }
+    const bytes = await image.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+    const imagePath = path.join(process.cwd(),imageDir,imageName)
+    await writeFile(imagePath, buffer)
+    return imageName
+
+  } catch (error) {
+    return error
+  }
+};
 
 const getMenuItem = async (menuItemId) => {
   try {
     if (!menuItemId) {
-      console.log("A menu item id is required");
+     return {error: "A menu item id is required"};
     }
     const menuItem = await prisma.menuItem.findFirst({
-      where: {id: parseInt(menuItemId)}
+      where: { id: parseInt(menuItemId) },
     });
     if (!menuItem) {
-      console.log("Item not found");
+      return {error: "Item not found"};
     }
     return menuItem;
   } catch (error) {
-    console.error(error)
+    return error
   }
 };
 
 const getAllMenuItems = async () => {
-    try {
-      const menuItems = await prisma.menuItem.findMany({
-        select:{
+  try {
+    const menuItems = await prisma.menuItem.findMany({
+      select: {
         id: true,
         name: true,
-        description:true,
+        description: true,
         price: true,
+        image: true,
         insertedAt: true,
-        updatedAt:true}
-      });
-      return menuItems
-    } catch (error) {
-      console.error(error)
-    }
-};
-
-const createMenuItem = async (name, desc, price,category) => {
-  try {
-    const menuItem = await prisma.menuItem.create({
-      data:{
-        name: name,
-        description: desc,
-        price: price,
-        categoryGroup: category,
-      }
-    })
-    return menuItem
+        updatedAt: true,
+      },
+    });
+    return menuItems;
   } catch (error) {
-    console.error(error)
+    return error;
   }
-
 };
 
-const updateMenuItem = async (id, name, desc, price,category) => {
+const createMenuItem = async (name, desc, price, category, image) => {
   try {
-    const menuItem = await prisma.menuItem.update({
-      where:{id: id},
-      data:{
+    const filename = await saveImage(image, name)
+    const menuItem = await prisma.menuItem.create({
+      data: {
         name: name,
         description: desc,
         price: price,
         categoryGroup: category,
-      }
-    })
+        image: `${imageDir}/${filename}`
+      },
+    });
     return menuItem;
   } catch (error) {
-    console.error(error)
+    return error;
   }
 };
 
+const updateMenuItem = async (id, name, desc, price, category, image) => {
+  console.log(id, name, desc, price, category,)
+  try {
+    const filename = await saveImage(image, name)
+    const menuItem = await prisma.menuItem.update({
+      where: { id: parseInt(id) },
+      data: {
+        name: name,
+        description: desc,
+        price: price,
+        categoryGroup: category,
+        image: `${imageDir}/${filename}`
+      },
+    });
+    return menuItem;
+  } catch (error) {
+    return error;
+  }
+};
 
-const deleteMenuItem = async (name, desc, price,category) => {
+const deleteMenuItem = async (name, desc, price, category) => {
   try {
     if ("not found") {
       console.log("Throw item not found error or return null");
     }
     console.log("select all menu items");
     return;
-  } catch (error) {}
-};
+  } catch (error) {
 
+  }
+};
 
 export const menuItemService = {
   getMenuItem,
   getAllMenuItems,
   createMenuItem,
   deleteMenuItem,
-  updateMenuItem
-  
-}
+  updateMenuItem,
+  saveImage
+};
