@@ -21,14 +21,14 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-      const user = await userService.signIn(credentials.username, credentials.password) 
-      
-      // If no error and we have user data, return it
-      if (!user.error) {
-        return user
-      }
-      // Return null if user data could not be retrieved
-      return null
+        const user = await userService.signIn(credentials.username, credentials.password) 
+        
+        // If no error and we have user data, return it
+        if (!user.error) {
+          return user
+        }
+        // Return null if user data could not be retrieved
+        return null
       },
     }),
 

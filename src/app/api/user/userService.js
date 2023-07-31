@@ -21,7 +21,7 @@ export const signIn = async (userEmail, userPassword) => {
     });
 
     if (!existingUser) {
-      return  { error: "User doesn't exist!" };
+      return { error: "User doesn't exist!" };
     }
 
     const userCredentialsCorrect = await bcrypt.compare(
@@ -29,6 +29,27 @@ export const signIn = async (userEmail, userPassword) => {
       existingUser.password
     );
     if (userCredentialsCorrect) return existingUser;
+  } catch (error) {
+    return error;
+  }
+};
+
+const getUser = async (id) => {
+  try {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: id },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        order: true
+      },
+    });
+
+    if (!existingUser) {
+      return { error: "User doesn't exist!" };
+    }
+    return existingUser;
   } catch (error) {
     return error;
   }
@@ -65,4 +86,5 @@ const registerUser = async (name, email, userPassword) => {
 export const userService = {
   registerUser,
   signIn,
+  getUser,
 };

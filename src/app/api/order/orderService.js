@@ -63,7 +63,8 @@ const updateOrder = async(orderId, updateStatus) => {
     })
     return order
   } catch (error) {
-    
+    //TODO: add something for error
+    console.error(error)
   }
 
 }

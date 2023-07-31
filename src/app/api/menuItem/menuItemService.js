@@ -2,14 +2,14 @@ import prisma from "../../utils/prisma";
 import { writeFile } from 'fs/promises'
 import path from "path";
 
-const ImageExtensions = ["image/jpg", "image/png", "image/jpeg"];
+const imageExtensions = ["image/jpg", "image/png", "image/jpeg"];
 const imageDir = "/src/public/images"
 
 const saveImage = async (image, filename) => {
   const imageExt = image.type.split("/").pop()
   const imageName = `${Date.now()}-${filename.trim()}.${imageExt}`
   try {
-    if (!ImageExtensions.includes(image.type)) {
+    if (!imageExtensions.includes(image.type)) {
       return { error: "Not an image!" };
     }
     if (parseInt(image.size) > 15728640) {
@@ -99,7 +99,7 @@ const updateMenuItem = async (id, name, desc, price, category, image) => {
     return error;
   }
 };
-
+//TODO: Implement this
 const deleteMenuItem = async (name, desc, price, category) => {
   try {
     if ("not found") {

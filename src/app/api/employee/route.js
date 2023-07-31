@@ -5,6 +5,10 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const email = searchParams.get('email')
 
+  if (!email){
+    const employees = await employeeService.getAllEmployee()
+    return employees
+  } 
   const employee = await employeeService.getEmployee(email)
   return NextResponse.json({ "employee": employee })
 }
