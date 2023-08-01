@@ -1,6 +1,7 @@
 import prisma from "../../utils/prisma";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
+import { signJwtAccessToken } from "@/app/utils/jwt";
 
 const registerUserSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -18,6 +19,9 @@ export const signIn = async (userEmail, userPassword) => {
 
     const existingUser = await prisma.user.findUnique({
       where: { email: email },
+      include:{
+        employee:true
+      }
     });
 
     if (!existingUser) {
@@ -28,7 +32,19 @@ export const signIn = async (userEmail, userPassword) => {
       password,
       existingUser.password
     );
-    if (userCredentialsCorrect) return existingUser;
+
+    if (userCredentialsCorrect){
+
+      return {
+        id: existingUser.id,
+        name: existingUser.name,
+        email: existingUser.email,
+        role: existingUser.employee[0].role
+      };
+    
+    }
+
+    return { error: "Incorrect credentials" };
   } catch (error) {
     return error;
   }
@@ -42,7 +58,7 @@ const getUser = async (id) => {
         id: true,
         name: true,
         email: true,
-        order: true
+        order: true,
       },
     });
 

@@ -14,6 +14,9 @@ export async function GET(request) {
 }
 
 export async function DELETE() {
+  const data = await request.json()
+  const employee = await employeeService.updateEmployee(data.email, data.status)
+  return NextResponse.json({ "employee": employee })
 
 }
 

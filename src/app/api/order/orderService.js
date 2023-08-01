@@ -2,6 +2,9 @@ import prisma from "../../utils/prisma";
 
 const createOrder = async (order) => {
   try {
+    if (!order){
+      return {error: ""}
+    }
     const newOrder = await prisma.Order.create({
       data: {
         User: {
@@ -18,7 +21,7 @@ const createOrder = async (order) => {
     });
     return newOrder;
   } catch (error) {
-    console.error(error);
+    return error;
   }
 };
 
@@ -34,7 +37,7 @@ const getAllUserOrders = async(userId) =>{
     })
     return order
   } catch (error) {
-    console.error(error)
+    return error;
   }
 }
 
@@ -50,7 +53,7 @@ const getOrder = async(orderId) =>{
     })
     return order
   } catch (error) {
-    console.error(error)
+    return error;
   }
 
 }
@@ -63,8 +66,7 @@ const updateOrder = async(orderId, updateStatus) => {
     })
     return order
   } catch (error) {
-    //TODO: add something for error
-    console.error(error)
+    return error;
   }
 
 }
