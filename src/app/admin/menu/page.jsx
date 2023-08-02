@@ -1,34 +1,19 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductInfo from "@/components/ProductInfo/ProductInfo";
 import styles from "./adminMenu.module.css";
 
 const AdminMenu = () => {
   const [searchKey, setSearchKey] = useState("");
 
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Product Name 1",
-      description: "Description of product",
-      role: "burger",
-      price: 20,
-    },
-    {
-      id: 2,
-      name: "Product Name 2",
-      description: "Description of product",
-      role: "burger",
-      price: 20,
-    },
-    {
-      id: 3,
-      name: "Product Name 3",
-      description: "Description of product",
-      role: "burger",
-      price: 20,
-    },
-  ]);
+  let [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/menuItem")
+      .then((response) => response.json())
+      .then((data) => setProducts(data.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   const updateProducts = (updatedProduct, index) => {
     let updatedProducts = [...products];
