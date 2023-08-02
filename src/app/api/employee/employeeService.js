@@ -5,7 +5,7 @@ const createEmployee = async (employee) => {
     const newEmployee = await prisma.Employee.create({
       data: {
         position: employee.position,
-        role: toUpperCase(employee.role),
+        role: employee.role,
         user: {
           connect: {
             email: employee.email,
