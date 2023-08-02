@@ -1,7 +1,6 @@
 import prisma from "../../utils/prisma";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import { signJwtAccessToken } from "@/app/utils/jwt";
 
 const registerUserSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
