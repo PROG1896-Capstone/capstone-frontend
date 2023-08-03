@@ -1,32 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EmployeeInfo from "@/components/EmployeeInfo/EmployeeInfo";
 import styles from "./employees.module.css";
 
 const Employees = () => {
-  const [employees, setEmployees] = useState([
-    {
-      id: 1,
-      name: "Employee Name 1",
-      email: "test@email.com",
-      role: "administrator",
-      active: true,
-    },
-    {
-      id: 2,
-      name: "Employee Name 2",
-      email: "test@email.com",
-      role: "administrator",
-      active: true,
-    },
-    {
-      id: 3,
-      name: "Employee Name 3",
-      email: "test@email.com",
-      role: "user",
-      active: false,
-    },
-  ]);
+  let [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/employee")
+      .then((response) => response.json())
+      .then((data) => setEmployees(data.employee))
+      .catch((err) => console.log(err));
+  }, []);
 
   const updateEmployees = (updatedEmployee, index) => {
     let updatedEmployees = [...employees];

@@ -10,18 +10,18 @@ const EmployeeInfo = ({ employeeData, updateEmployees, remove }) => {
       <input
         className={styles.text}
         type="text"
-        value={info.name}
+        value={info.user.name}
         onChange={(e) => {
-          info.name = e.target.value;
+          info.user.name = e.target.value;
           updateEmployees(info);
         }}
       />
       <input
         className={styles.text}
         type="email"
-        value={info.email}
+        value={info.user.email}
         onChange={(e) => {
-          info.email = e.target.value;
+          info.user.email = e.target.value;
           updateEmployees(info);
         }}
       />
