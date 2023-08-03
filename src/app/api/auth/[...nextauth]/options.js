@@ -3,7 +3,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/app/utils/prisma";
 import { userService } from "../../user/userService";
 
-
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -51,7 +50,8 @@ export const authOptions = {
       return token;
     },
   },
-  // pages: {
-  //   signIn: "/login",
-  // },
+  pages: {
+    signIn: "/login",
+    newUser: "/signup",
+  },
 };

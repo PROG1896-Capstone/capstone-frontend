@@ -1,10 +1,41 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 import styles from "./signup.module.css";
 
 export const Signup = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = () => {
+    fetch("http://localhost:3000/api/user", {
+      method: "POST",
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.user.error) {
+          alert(data.user.error);
+        } else {
+          return data.user;
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   return (
     <div className={styles.page}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <h1 className={styles.heading}>Sign Up</h1>
         <div className={styles.input_box}>
           <label className={styles.label} htmlFor="signup_name">
@@ -15,6 +46,8 @@ export const Signup = () => {
             type="name"
             name="name"
             id="signup_name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className={styles.input_box}>
@@ -26,6 +59,8 @@ export const Signup = () => {
             type="email"
             name="email"
             id="signup_email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className={styles.input_box}>
@@ -37,6 +72,8 @@ export const Signup = () => {
             type="password"
             name="password"
             id="signup_password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <input className={styles.submit} type="submit" value="Sign Up" />
