@@ -15,8 +15,10 @@ const createEmployee = async (employee) => {
     });
     return newEmployee;
   } catch (error) {
-    console.error(error);
-    return error;
+    if (error.code == "P2025"){
+     throw new Error("User with the email doesn't exist");
+
+    }
   }
 };
 
@@ -83,5 +85,5 @@ export const employeeService = {
   createEmployee,
   getEmployee,
   updateEmployee,
-  getAllEmployee
+  getAllEmployee,
 };
