@@ -50,6 +50,7 @@ const getAllMenuItems = async () => {
         id: true,
         name: true,
         description: true,
+        categoryGroup: true,
         price: true,
         image: true,
         insertedAt: true,
@@ -64,7 +65,7 @@ const getAllMenuItems = async () => {
 
 const createMenuItem = async (name, desc, price, category, image) => {
   try {
-    const filename = await saveImage(image, name)
+    // const filename = await saveImage(image, name)
     const menuItem = await prisma.menuItem.create({
       data: {
         name: name,
@@ -82,7 +83,6 @@ const createMenuItem = async (name, desc, price, category, image) => {
 };
 
 const updateMenuItem = async (id, name, desc, price, category, image) => {
-  console.log(id, name, desc, price, category,)
   try {
     // const filename = await saveImage(image, name)
     const menuItem = await prisma.menuItem.update({
@@ -102,15 +102,27 @@ const updateMenuItem = async (id, name, desc, price, category, image) => {
   }
 };
 //TODO: Implement this
-const deleteMenuItem = async (name, desc, price, category) => {
+const deleteMenuItem = async (menuItemId) => {
   try {
-    if ("not found") {
-      console.log("Throw item not found error or return null");
+
+    if (!menuItemId){
+      console.log('no id')
     }
-    console.log("select all menu items");
+    const menuItem = await prisma.menuItem.findFirst({
+      where: { id: parseInt(menuItemId) },
+    });
+
+    if (menuItem){
+     return await prisma.menuItem.update({
+        where: { id: parseInt(menuItemId) },
+        data: {
+          active: false
+        },
+      });
+    }
     return;
   } catch (error) {
-
+    return error
   }
 };
 
