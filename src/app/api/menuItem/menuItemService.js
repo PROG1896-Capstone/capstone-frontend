@@ -64,7 +64,7 @@ const getAllMenuItems = async () => {
 
 const createMenuItem = async (name, desc, price, category, image) => {
   try {
-    const filename = await saveImage(image, name)
+    // const filename = await saveImage(image, name)
     const menuItem = await prisma.menuItem.create({
       data: {
         name: name,

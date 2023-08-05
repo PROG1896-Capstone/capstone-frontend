@@ -8,12 +8,14 @@ const AdminMenu = () => {
 
   let [products, setProducts] = useState([]);
 
-  useEffect(() => {
+  const getProducts = () => {
     fetch("http://localhost:3000/api/menuItem")
       .then((response) => response.json())
       .then((data) => setProducts(data.data))
       .catch((err) => console.log(err));
-  }, []);
+  };
+
+  useEffect(() => getProducts(), []);
 
   const updateProducts = (updatedProduct, index) => {
     let updatedProducts = [...products];
@@ -27,18 +29,28 @@ const AdminMenu = () => {
     setProducts(result);
   };
 
-  const [productKey, setProductKey] = useState(5000);
-
   const addProduct = () => {
-    const newProduct = {
-      id: productKey,
-      name: `Product ${productKey}`,
-      description: "Description of product",
-      role: "burger",
-      price: 20,
-    };
-    setProducts([...products, newProduct]);
-    setProductKey(productKey + 1);
+    fetch("http://localhost:3000/api/menuItem", {
+      method: "POST",
+      body: JSON.stringify({
+        name: "Name of product",
+        description: "Description of product",
+        categoryGroup: "burger",
+        price: 20,
+        image: "img-menu-item.png",
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .then(getProducts)
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   return (
