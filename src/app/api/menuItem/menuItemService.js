@@ -46,6 +46,7 @@ const getMenuItem = async (menuItemId) => {
 const getAllMenuItems = async () => {
   try {
     const menuItems = await prisma.menuItem.findMany({
+      where:{active: true},
       select: {
         id: true,
         name: true,
@@ -101,6 +102,7 @@ const updateMenuItem = async (id, name, desc, price, category, image) => {
     return error;
   }
 };
+
 //TODO: Implement this
 const deleteMenuItem = async (menuItemId) => {
   try {

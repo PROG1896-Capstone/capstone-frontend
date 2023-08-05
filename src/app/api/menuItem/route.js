@@ -24,7 +24,7 @@ export async function DELETE(request) {
 
 export async function PATCH(request) {
   const data = await request.json()
-  const updateItem = await menuItemService.updateMenuItem(data.id, data.name, data.description, data.Price, data.categoryGroup)
+  const updateItem = await menuItemService.updateMenuItem(data.id, data.name, data.description, data.price, data.categoryGroup)
   return NextResponse.json({ "updated": updateItem })
 }
 
