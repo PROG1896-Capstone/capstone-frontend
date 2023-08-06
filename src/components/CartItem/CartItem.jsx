@@ -3,21 +3,46 @@ import Image from "next/image";
 import iconMenuClose from "@/assets/icon-menu-close.svg";
 import styles from "./cartItem.module.css";
 
-const CartItem = ({ name, price, addSubtotal, remove }) => {
-  const [quantity, setQuantity] = useState(1);
+const CartItem = ({ id, name, price, savedQuantity, addSubtotal, remove }) => {
+  const [quantity, setQuantity] = useState(savedQuantity);
+
+  const saveCartItem = (newQuantity) => {
+    let cartItems = JSON.parse(localStorage.getItem("cartItems"));
+    let newItems = cartItems.filter((item) => item.id !== id);
+
+    let newItem = {};
+    cartItems.map((item) => {
+      if (item.id === id) {
+        newItem = { id: id, name: name, price: price, quantity: newQuantity };
+      }
+    });
+    newItems = [...newItems, newItem];
+
+    localStorage.setItem("cartItems", JSON.stringify(newItems));
+  };
 
   const subtractQuantity = () => {
+    let newQuantity = quantity;
+
     if (quantity !== 1) {
-      setQuantity(quantity - 1);
+      newQuantity--;
+      setQuantity(newQuantity);
       addSubtotal(0 - price);
     }
+
+    saveCartItem(newQuantity);
   };
 
   const addQuantity = () => {
+    let newQuantity = quantity;
+
     if (quantity !== 9) {
-      setQuantity(quantity + 1);
+      newQuantity++;
+      setQuantity(newQuantity);
       addSubtotal(price);
     }
+
+    saveCartItem(newQuantity);
   };
 
   const handleRemove = () => {

@@ -23,6 +23,7 @@ export const Menu = () => {
           {menuItems.map((item) => (
             <MenuItem
               key={item.id}
+              id={item.id}
               imgSrc={imgMenuItem}
               imgAlt="img-menu-item"
               name={item.name}
@@ -36,6 +37,7 @@ export const Menu = () => {
           {menuItems.map((item) => (
             <MenuItem
               key={item.id}
+              id={item.id}
               imgSrc={imgMenuItem}
               imgAlt="img-menu-item"
               name={item.name}

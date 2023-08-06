@@ -1,51 +1,49 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CartItem from "@/components/CartItem/CartItem";
 import styles from "./cart.module.css";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Lorem Ipsum 1",
-      price: 12,
-    },
-    {
-      id: 2,
-      name: "Lorem Ipsum 2",
-      price: 12,
-    },
-    {
-      id: 3,
-      name: "Lorem Ipsum 3",
-      price: 12,
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
 
-  const [subtotal, setSubtotal] = useState(36);
+  const [subtotal, setSubtotal] = useState(0);
 
   const addSubtotal = (value) => {
-    setSubtotal(subtotal + value);
+    const newSubtotal = parseInt(subtotal) + parseInt(value);
+
+    setSubtotal(newSubtotal);
+    localStorage.setItem("subtotal", JSON.stringify(newSubtotal));
   };
 
   const removeItem = (id) => {
-    const items = cartItems;
-    const result = items.filter((item) => item.id !== id);
-    setCartItems(result);
+    const newItems = cartItems.filter((item) => item.id !== id);
+    setCartItems(newItems);
+
+    localStorage.setItem("cartItems", JSON.stringify(newItems));
   };
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("cartItems"));
+    if (items) setCartItems(items);
+
+    const subtotal = JSON.parse(localStorage.getItem("subtotal"));
+    if (subtotal) setSubtotal(subtotal);
+  }, []);
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.cart}>
           <h1 className={styles.heading}>Cart</h1>
-          {cartItems.map((item, index) => (
+          {cartItems.map((item) => (
             <CartItem
+              id={item.id}
               name={item.name}
               price={item.price}
+              savedQuantity={item.quantity}
               addSubtotal={addSubtotal}
               remove={() => removeItem(item.id)}
-              key={item.id}
+              key={`${item.id}_${item.name}`}
             />
           ))}
         </div>
