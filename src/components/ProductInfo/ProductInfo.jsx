@@ -30,9 +30,9 @@ const ProductInfo = ({ productData, updateProducts, remove }) => {
       />
       <select
         className={styles.select}
-        value={info.category}
+        value={info.categoryGroup}
         onChange={(e) => {
-          info.role = e.target.value;
+          info.categoryGroup = e.target.value;
           updateProducts(info);
         }}
         disabled={!updateMode}

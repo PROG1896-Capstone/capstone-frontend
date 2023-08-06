@@ -23,6 +23,32 @@ const AdminMenu = () => {
     setProducts(updatedProducts);
   };
 
+  const saveProducts = () => {
+    products.map((product) => {
+      fetch("http://localhost:3000/api/menuItem", {
+        method: "PATCH",
+        body: JSON.stringify({
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          categoryGroup: product.categoryGroup,
+          price: product.price,
+          image: "img-menu-item.png",
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    });
+  };
+
   const removeItem = (id) => {
     const items = products;
     const result = items.filter((item) => item.id !== id);
@@ -67,7 +93,9 @@ const AdminMenu = () => {
           <button className={styles.add_btn} onClick={addProduct}>
             Add Item
           </button>
-          <button className={styles.save_btn}>Save Changes</button>
+          <button className={styles.save_btn} onClick={saveProducts}>
+            Save Changes
+          </button>
         </div>
       </div>
       <div className={styles.table}>
