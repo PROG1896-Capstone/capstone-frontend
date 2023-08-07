@@ -8,8 +8,15 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
-  const { searchParams } = new URL(request.url)
-  const id = searchParams.get('id')
-  const user = await userService.getUser(id)
-  return NextResponse.json({"user": user})
+  try {
+    const { searchParams } = new URL(request.url)
+    const email = searchParams.get('email')
+    const password = searchParams.get('password')
+    const user = await userService.signIn(email, password)
+    return NextResponse.json({"data": user});  
+  }
+ catch (e) {
+    return NextResponse.json({"error": e.message}, { status: 400 }); 
+ }
+
 }

@@ -9,22 +9,23 @@ const registerUserSchema = z.object({
 
 export const signIn = async (userEmail, userPassword) => {
   try {
-    const email = userEmail.trim();
-    const password = userPassword.trim();
+    const email = userEmail?.trim();
+    const password = userPassword?.trim();
 
     // Check if email and password are not empty.
-    if (email === "" || password === "")
-      return { error: "Fields can not be empty!" };
+    if (email === "" || password === "") {
+      throw new Error("Fields can not be empty!");
+    }
 
     const existingUser = await prisma.user.findUnique({
       where: { email: email },
       include:{
-        employee:true
+        employee: true
       }
     });
 
     if (!existingUser) {
-      return { error: "User doesn't exist!" };
+      throw new Error("User doesn't exist!");
     }
 
     const userCredentialsCorrect = await bcrypt.compare(
@@ -33,19 +34,17 @@ export const signIn = async (userEmail, userPassword) => {
     );
 
     if (userCredentialsCorrect){
-
       return {
         id: existingUser.id,
         name: existingUser.name,
         email: existingUser.email,
         role: existingUser.employee[0].role
       };
-    
     }
 
-    return { error: "Incorrect credentials" };
+    throw new Error("Incorrect credentials");
   } catch (error) {
-    return error;
+    throw new Error(error.message);
   }
 };
 

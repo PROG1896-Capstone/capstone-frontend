@@ -86,3 +86,7 @@
 .link:hover {
   text-decoration: underline;
 }
+
+.errorMessage {
+color: red;
+}

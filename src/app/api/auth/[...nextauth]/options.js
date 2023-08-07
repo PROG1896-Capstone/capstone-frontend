@@ -21,16 +21,10 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-        const user = await userService.signIn(
-          credentials.username,
+        return await userService.signIn(
+          credentials.userName,
           credentials.password
         );
-        // If no error and we have user data, return it
-        if (!user.error) {
-          return user;
-        }
-        // Return null if user data could not be retrieved
-        return null;
       },
     }),
   ],
@@ -51,7 +45,7 @@ export const authOptions = {
     },
   },
   pages: {
-    signIn: "/login",
-    newUser: "/signup",
+    // signIn: "/login",
+    signUp: "/signup",
   },
 };

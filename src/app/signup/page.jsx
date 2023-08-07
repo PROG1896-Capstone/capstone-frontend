@@ -1,14 +1,18 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./signup.module.css";
+import { useRouter } from 'next/navigation';
 
 export const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
+  const router = useRouter()
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
     fetch("http://localhost:3000/api/user", {
       method: "POST",
       body: JSON.stringify({
@@ -18,14 +22,14 @@ export const Signup = () => {
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
-      },
+      }, 
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.user.error) {
           alert(data.user.error);
         } else {
-          return data.user;
+          router.push('/')
         }
       })
       .catch((err) => {

@@ -1,6 +1,7 @@
 import styles from "./home.module.css";
+import Link from 'next/link'
 
-export const Home = () => {
+export const Home = async () => {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -8,7 +9,7 @@ export const Home = () => {
           Sunset Bistro
         </h1>
         <p className={styles.paragraph}>Once you try it, you will love it.</p>
-        <button className={styles.btn}>Order Now</button>
+        <Link href='/menu'><button className={styles.btn}>Order Now</button></Link>
       </div>
     </div>
   );

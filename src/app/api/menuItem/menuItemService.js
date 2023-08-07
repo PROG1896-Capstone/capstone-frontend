@@ -1,13 +1,13 @@
 import prisma from "../../utils/prisma";
-import { writeFile } from 'fs/promises'
+import { writeFile } from "fs/promises";
 import path from "path";
 
 const imageExtensions = ["image/jpg", "image/png", "image/jpeg"];
-const imageDir = "/src/public/images"
+const imageDir = "/src/public/images";
 
 const saveImage = async (image, filename) => {
-  const imageExt = image.type.split("/").pop()
-  const imageName = `${Date.now()}-${filename.trim()}.${imageExt}`
+  const imageExt = image.type.split("/").pop();
+  const imageName = `${Date.now()}-${filename.trim()}.${imageExt}`;
   try {
     if (!imageExtensions.includes(image.type)) {
       return { error: "Not an image!" };
@@ -15,48 +15,61 @@ const saveImage = async (image, filename) => {
     if (parseInt(image.size) > 15728640) {
       return { error: "Image is too large!" };
     }
-    const bytes = await image.arrayBuffer()
-    const buffer = Buffer.from(bytes)
-    const imagePath = path.join(process.cwd(),imageDir,imageName)
-    await writeFile(imagePath, buffer)
-    return imageName
-
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const imagePath = path.join(process.cwd(), imageDir, imageName);
+    await writeFile(imagePath, buffer);
+    return imageName;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
 const getMenuItem = async (menuItemId) => {
   try {
     if (!menuItemId) {
-     return {error: "A menu item id is required"};
+      return { error: "A menu item id is required" };
     }
     const menuItem = await prisma.menuItem.findFirst({
       where: { id: parseInt(menuItemId) },
     });
     if (!menuItem) {
-      return {error: "Item not found"};
+      return { error: "Item not found" };
     }
     return menuItem;
   } catch (error) {
-    return error
+    return error;
   }
 };
 
 const getAllMenuItems = async () => {
   try {
+    const menuGroup = await prisma.menuItem.groupBy({
+      by: ["categoryGroup"],
+    });
     const menuItems = await prisma.menuItem.findMany({
       select: {
         id: true,
         name: true,
         description: true,
+        categoryGroup: true,
         price: true,
         image: true,
         insertedAt: true,
         updatedAt: true,
       },
     });
-    return menuItems;
+    menuGroup.map((group) => {
+      group.data = [];
+    });
+    for (let i in menuItems) {
+      for (let g in menuGroup) {
+        if (menuGroup[g].categoryGroup == menuItems[i].categoryGroup) {
+          menuGroup[g].data.push(menuItems[i]);
+        }
+      }
+    }
+    return menuGroup;
   } catch (error) {
     return error;
   }
@@ -72,7 +85,7 @@ const createMenuItem = async (name, desc, price, category, image) => {
         price: price,
         categoryGroup: category,
         // image: `${imageDir}/${filename}`
-        image: `${imageDir}/${name}`
+        image: `${imageDir}/${name}`,
       },
     });
     return menuItem;
@@ -82,7 +95,7 @@ const createMenuItem = async (name, desc, price, category, image) => {
 };
 
 const updateMenuItem = async (id, name, desc, price, category, image) => {
-  console.log(id, name, desc, price, category,)
+  console.log(id, name, desc, price, category);
   try {
     // const filename = await saveImage(image, name)
     const menuItem = await prisma.menuItem.update({
@@ -93,7 +106,7 @@ const updateMenuItem = async (id, name, desc, price, category, image) => {
         price: price,
         categoryGroup: category,
         // image: `${imageDir}/${filename}`
-        image: `${imageDir}/${name}`
+        image: `${imageDir}/${name}`,
       },
     });
     return menuItem;
@@ -109,9 +122,7 @@ const deleteMenuItem = async (name, desc, price, category) => {
     }
     console.log("select all menu items");
     return;
-  } catch (error) {
-
-  }
+  } catch (error) {}
 };
 
 export const menuItemService = {
@@ -120,5 +131,5 @@ export const menuItemService = {
   createMenuItem,
   deleteMenuItem,
   updateMenuItem,
-  saveImage
+  saveImage,
 };

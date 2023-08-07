@@ -11,13 +11,15 @@ export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className={styles.header}>
+    <nav className={styles.header}>
       <div className={styles.logo_container}>
-        <Image
-          className={styles.logo}
-          src={iconLogo}
-          alt="sunset-bistro-logo"
-        />
+        <a href='/'>
+          <Image
+            className={styles.logo}
+            src={iconLogo}
+            alt="sunset-bistro-logo"
+          />
+        </a>
         <Image
           className={styles.menu_icon}
           src={menuOpen ? iconMenuClose : iconMenuOpen}
@@ -27,7 +29,7 @@ export const Header = () => {
       </div>
       <NavLinks className={styles.desktop_links} />
       {menuOpen && <NavLinks className={styles.mobile_links} />}
-    </header>
+    </nav>
   );
 };
 
