@@ -48,6 +48,7 @@ const getAllMenuItems = async () => {
       by: ["categoryGroup"],
     });
     const menuItems = await prisma.menuItem.findMany({
+      where:{active: true},
       select: {
         id: true,
         name: true,
@@ -114,15 +115,30 @@ const updateMenuItem = async (id, name, desc, price, category, imageName) => {
     return error;
   }
 };
+
 //TODO: Implement this
-const deleteMenuItem = async (name, desc, price, category) => {
+const deleteMenuItem = async (menuItemId) => {
   try {
-    if ("not found") {
-      console.log("Throw item not found error or return null");
+
+    if (!menuItemId){
+      console.log('no id')
     }
-    console.log("select all menu items");
+    const menuItem = await prisma.menuItem.findFirst({
+      where: { id: parseInt(menuItemId) },
+    });
+
+    if (menuItem){
+     return await prisma.menuItem.update({
+        where: { id: parseInt(menuItemId) },
+        data: {
+          active: false
+        },
+      });
+    }
     return;
-  } catch (error) {}
+  } catch (error) {
+    return error
+  }
 };
 
 export const menuItemService = {

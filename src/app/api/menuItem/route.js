@@ -14,13 +14,17 @@ export async function GET(request) {
   return NextResponse.json({ "data": menuItem })
 }
 
-export async function DELETE() {
+export async function DELETE(request) {
+  const { searchParams } = new URL(request.url)
+  const itemId = searchParams.get('itemId')
+  const menuItem = await menuItemService.deleteMenuItem(itemId)
   return NextResponse.json({ "message": 'Delete Items' })
 }
 
+
 export async function PATCH(request) {
   const data = await request.json()
-  const updateItem = await menuItemService.updateMenuItem(data.id, data.name, data.description, data.Price, data.categoryGroup)
+  const updateItem = await menuItemService.updateMenuItem(data.id, data.name, data.description, data.price, data.categoryGroup)
   return NextResponse.json({ "updated": updateItem })
 }
 
