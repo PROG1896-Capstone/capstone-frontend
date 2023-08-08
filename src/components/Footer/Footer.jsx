@@ -22,7 +22,12 @@ export const Footer = () => {
         </p>
         <div className={styles.icons}>
           {footerIcons.map((icon) => (
-            <Image className={styles.icon} src={icon.src} alt={icon.alt} />
+            <Image
+              className={styles.icon}
+              src={icon.src}
+              alt={icon.alt}
+              key={`footer_${icon.alt}`}
+            />
           ))}
         </div>
       </div>

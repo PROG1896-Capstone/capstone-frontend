@@ -4,12 +4,12 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0.5rem;
-  max-width: 10rem;
+  max-width: 15rem;
 }
 
 .img {
-  width: 10rem;
-  height: auto;
+  width: 12rem;
+  height: 10rem;
 }
 
 .name {
