@@ -11,7 +11,17 @@ const AdminMenu = () => {
   const getProducts = () => {
     fetch("http://localhost:3000/api/menuItem")
       .then((response) => response.json())
-      .then((data) => setProducts(data.data))
+      .then((data) => {
+        let categoryGroups = [];
+        let fetchedProducts = [];
+
+        categoryGroups = data.data;
+        categoryGroups.map((categoryGroup) => {
+          fetchedProducts = [...fetchedProducts, ...categoryGroup.data];
+        });
+        setProducts(fetchedProducts);
+      })
+
       .catch((err) => console.log(err));
   };
 
