@@ -18,8 +18,6 @@ export async function DELETE() {
   return NextResponse.json({ "message": 'Delete Items' })
 }
 
-
-
 export async function PATCH(request) {
   const data = await request.json()
   const updateItem = await menuItemService.updateMenuItem(data.id, data.name, data.description, data.Price, data.categoryGroup)
@@ -28,9 +26,9 @@ export async function PATCH(request) {
 
 export async function POST(request) {
   const data = await request.json()
-  const newItem = await menuItemService.createMenuItem(data.name, data.description, data.price, data.categoryGroup)
+  const newItem = await menuItemService.createMenuItem(data.name, data.description, data.price, data.categoryGroup,data.image)
   console.log(newItem)
-  return NextResponse.json({ "message": 'Create Items' })
+  return NextResponse.json({ "message": newItem })
 }
 
 

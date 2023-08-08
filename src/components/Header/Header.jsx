@@ -6,8 +6,10 @@ import iconLogo from "@/assets/sunset-bistro-logo.png";
 import iconMenuOpen from "@/assets/icon-menu-open.svg";
 import iconMenuClose from "@/assets/icon-menu-close.svg";
 import styles from "./header.module.css";
+import { useSession } from "next-auth/react";
 
 export const Header = () => {
+  const { data: session, status } = useSession();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

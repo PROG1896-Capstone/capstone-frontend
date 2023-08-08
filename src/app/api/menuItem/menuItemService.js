@@ -75,7 +75,7 @@ const getAllMenuItems = async () => {
   }
 };
 
-const createMenuItem = async (name, desc, price, category, image) => {
+const createMenuItem = async (name, desc, price, category, imageName) => {
   try {
     // const filename = await saveImage(image, name)
     const menuItem = await prisma.menuItem.create({
@@ -85,7 +85,7 @@ const createMenuItem = async (name, desc, price, category, image) => {
         price: price,
         categoryGroup: category,
         // image: `${imageDir}/${filename}`
-        image: `${imageDir}/${name}`,
+        image: `${imageDir}/${imageName}`,
       },
     });
     return menuItem;
@@ -94,7 +94,7 @@ const createMenuItem = async (name, desc, price, category, image) => {
   }
 };
 
-const updateMenuItem = async (id, name, desc, price, category, image) => {
+const updateMenuItem = async (id, name, desc, price, category, imageName) => {
   console.log(id, name, desc, price, category);
   try {
     // const filename = await saveImage(image, name)
@@ -106,7 +106,7 @@ const updateMenuItem = async (id, name, desc, price, category, image) => {
         price: price,
         categoryGroup: category,
         // image: `${imageDir}/${filename}`
-        image: `${imageDir}/${name}`,
+        image: `${imageDir}/${imageName}`,
       },
     });
     return menuItem;

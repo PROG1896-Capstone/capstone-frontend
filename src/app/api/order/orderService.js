@@ -5,17 +5,18 @@ const createOrder = async (order) => {
     if (!order){
       return {error: ""}
     }
+    // console.log([...order.orderItems])
     const newOrder = await prisma.Order.create({
       data: {
-        User: {
-          connect: {
-            id: order.UserId
-          }
-        },
         orderItems: {
           createMany: {
             data: [...order.orderItems]
           },
+        },
+        user: {
+          connect: {
+            id: order.userId
+          }
         },
       },
     });

@@ -33,7 +33,9 @@ export const authOptions = {
   },
   callbacks: {
     jwt: ({ token, user }) => {
-      token.role = user.role;
+      if (user.role) {
+        token.role = user.role;
+      }
       console.log("JWT Callback", { token, user });
       if (user) {
         return {
@@ -45,7 +47,7 @@ export const authOptions = {
     },
   },
   pages: {
-    // signIn: "/login",
+    signIn: "/login",
     signUp: "/signup",
   },
 };

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server"
 export async function POST(request) {
   const data = await request.json()
   const newOrder = await orderService.createOrder(data)
+  console.log(newOrder)
   return NextResponse.json({ "order": newOrder })
 }
 

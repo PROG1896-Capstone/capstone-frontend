@@ -8,10 +8,6 @@ import styles from "./navLinks.module.css";
 const NavLinks = ({ className }) => {
   const textLinks = [
     {
-      href: "/",
-      label: "Home",
-    },
-    {
       href: "/menu",
       label: "Menu",
     },
