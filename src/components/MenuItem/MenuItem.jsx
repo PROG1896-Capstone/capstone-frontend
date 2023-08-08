@@ -28,20 +28,23 @@ export const MenuItem = ({ id, imgSrc, imgAlt, name, description, price }) => {
 
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     localStorage.setItem("subtotal", JSON.stringify(subtotal));
-    alert('Item added')
+    alert("Item added");
   };
 
   return (
     <div className={styles.container}>
-      <Image
-        className={styles.img}
-        src={imgSrc}
-        alt={imgAlt}
-      />
+      <Image className={styles.img} src={imgSrc} alt={imgAlt} />
       <h3 className={styles.name}>{name}</h3>
       <p className={styles.description}>{description}</p>
       <h4 className={styles.price}>${price}</h4>
-      <button className='' onClick={()=>{addToCart()}}>Add to cart</button>
+      <button
+        className={styles.btn}
+        onClick={() => {
+          addToCart();
+        }}
+      >
+        Add to cart
+      </button>
     </div>
   );
 };

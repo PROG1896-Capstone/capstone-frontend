@@ -23,3 +23,18 @@
 .price {
   margin: 0;
 }
+
+.btn {
+  user-select: none;
+  cursor: pointer;
+  background-color: #66a3d9;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  transform: scale(0.95);
+}
