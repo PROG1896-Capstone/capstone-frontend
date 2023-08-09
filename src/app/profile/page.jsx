@@ -14,7 +14,6 @@ const Profile = () => {
 
   const getOrders = async () => {
     const session = await getSession();
-    console.log(session);
 
     session &&
       fetch(`http://localhost:3000/api/order?userId=${session.user.id}`)
