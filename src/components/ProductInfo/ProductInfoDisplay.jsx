@@ -2,7 +2,13 @@ import { useState } from "react";
 import styles from "./productInfo.module.css";
 import ProductInfo from "./ProductInfo";
 
-const ProductInfoDisplay = ({addToUpdateProductsArr, products, setMenuImage, searchKey }) => {
+const ProductInfoDisplay = ({
+  addToUpdateProductsArr,
+  products,
+  setMenuImage,
+  searchKey,
+  removeItem,
+}) => {
   return (
     <div className={styles.products}>
       {products

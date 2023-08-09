@@ -50,7 +50,7 @@ const AdminMenu = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log('');
+          console.log("");
         })
         .catch((err) => {
           console.log(err.message);
@@ -120,6 +120,7 @@ const AdminMenu = () => {
             products={products}
             setMenuImage={setImage}
             searchKey={searchKey}
+            removeItem={removeItem}
           />
         </div>
       </div>
