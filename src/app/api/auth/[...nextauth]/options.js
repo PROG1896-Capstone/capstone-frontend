@@ -32,12 +32,20 @@ export const authOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    jwt: ({ token, user }) => {
-      if (user.role) {
-        token.role = user.role;
+    session: ({ session, token, user }) => {
+      session.user.id = token.id
+      if (token.role) {
+        session.user.role = token.role
+        return session
       }
-      console.log("JWT Callback", { token, user });
+      return session
+    },
+    jwt: ({ token, user }) => {
+      // console.log("JWT Callback", { token});
       if (user) {
+        if (user.role) {
+          token.role = user.role;
+        }
         return {
           ...token,
           id: user.id,

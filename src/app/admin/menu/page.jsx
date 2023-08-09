@@ -1,12 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
-import ProductInfo from "@/components/ProductInfo/ProductInfo";
 import styles from "./adminMenu.module.css";
+import ProductInfoDisplay from "@/components/ProductInfo/ProductInfoDisplay";
 
 const AdminMenu = () => {
   const [searchKey, setSearchKey] = useState("");
 
   let [products, setProducts] = useState([]);
+  let [updatedProducts, setUpdatedProducts] = useState([]);
+  const [images, setImage] = useState([]);
+
+  const addToUpdateProductsArr = (item) => {
+    setUpdatedProducts((oldItems) => [...oldItems, item]);
+  };
 
   const getProducts = () => {
     fetch("http://localhost:3000/api/menuItem")
@@ -19,6 +25,7 @@ const AdminMenu = () => {
         categoryGroups.map((categoryGroup) => {
           fetchedProducts = [...fetchedProducts, ...categoryGroup.data];
         });
+
         setProducts(fetchedProducts);
       })
 
@@ -27,36 +34,29 @@ const AdminMenu = () => {
 
   useEffect(() => getProducts(), []);
 
-  const updateProducts = (updatedProduct, index) => {
-    let updatedProducts = [...products];
-    updatedProducts[index] = updatedProduct;
-    setProducts(updatedProducts);
-  };
-
   const saveProducts = () => {
-    products.map((product) => {
+    var formData = new FormData();
+    updatedProducts.map((updatedProduct) => {
+      formData.append("file", updatedProduct.file);
+      formData.append("id", updatedProduct.id);
+      formData.append("name", updatedProduct.name);
+      formData.append("description", updatedProduct.description);
+      formData.append("categoryGroup", updatedProduct.categoryGroup);
+      formData.append("price", updatedProduct.price);
+
       fetch("http://localhost:3000/api/menuItem", {
         method: "PATCH",
-        body: JSON.stringify({
-          id: product.id,
-          name: product.name,
-          description: product.description,
-          categoryGroup: product.categoryGroup,
-          price: product.price,
-          image: "img-menu-item.png",
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+        body: formData,
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          console.log('');
         })
         .catch((err) => {
           console.log(err.message);
         });
     });
+    setUpdatedProducts([]);
   };
 
   const removeItem = (id) => {
@@ -115,20 +115,12 @@ const AdminMenu = () => {
         <h3 className={styles.heading}>Price</h3>
         <h3 className={styles.heading}>Image</h3>
         <div className={styles.products}>
-          {products
-            .filter((product) =>
-              product.name.toLowerCase().includes(searchKey.toLowerCase())
-            )
-            .map((product, index) => (
-              <ProductInfo
-                key={product.id}
-                productData={product}
-                updateProducts={(updatedProduct) =>
-                  updateProducts(updatedProduct, index)
-                }
-                remove={() => removeItem(product.id)}
-              />
-            ))}
+          <ProductInfoDisplay
+            addToUpdateProductsArr={addToUpdateProductsArr}
+            products={products}
+            setMenuImage={setImage}
+            searchKey={searchKey}
+          />
         </div>
       </div>
     </div>

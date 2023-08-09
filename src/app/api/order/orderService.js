@@ -1,11 +1,15 @@
 import prisma from "../../utils/prisma";
 
 const createOrder = async (order) => {
+  order.orderItems.map(item => {
+    item.price = undefined;
+    item.name = undefined
+    item.note = undefined
+  })
   try {
     if (!order){
       return {error: ""}
     }
-    // console.log([...order.orderItems])
     const newOrder = await prisma.Order.create({
       data: {
         orderItems: {

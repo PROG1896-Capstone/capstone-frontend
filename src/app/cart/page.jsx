@@ -2,8 +2,15 @@
 import { useState, useEffect } from "react";
 import CartItem from "@/components/CartItem/CartItem";
 import styles from "./cart.module.css";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+
 
 const Cart = () => {
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
   const [cartItems, setCartItems] = useState([]);
 
   const [subtotal, setSubtotal] = useState(0);
@@ -30,6 +37,35 @@ const Cart = () => {
     if (subtotal) setSubtotal(subtotal);
   }, []);
 
+  const saveCart = () => {
+    if (!session){
+      router.push("/login")
+      return
+    }
+
+    fetch("http://localhost:3000/api/order", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: session.user.id,
+        orderItems: cartItems,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  
+      alert("Order created");
+      localStorage.clear();
+      location.reload();
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -49,7 +85,9 @@ const Cart = () => {
         </div>
         <div className={styles.subtotal}>
           <h3 className={styles.subheading}>Subtotal: ${subtotal}</h3>
-          <button className={styles.btn}>Check Out</button>
+          <button className={styles.btn} onClick={saveCart}>
+            Check Out
+          </button>
         </div>
       </div>
     </div>

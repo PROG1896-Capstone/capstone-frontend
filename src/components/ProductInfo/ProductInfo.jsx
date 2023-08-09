@@ -1,7 +1,8 @@
 import { useState } from "react";
 import styles from "./productInfo.module.css";
 
-const ProductInfo = ({ productData, updateProducts, remove }) => {
+const ProductInfo = ({ productData, addToUpdateProductsArr, remove, setMenuImage}) => {
+
   let info = productData;
 
   const [updateMode, setUpdateMode] = useState(false);
@@ -14,7 +15,7 @@ const ProductInfo = ({ productData, updateProducts, remove }) => {
         value={info.name}
         onChange={(e) => {
           info.name = e.target.value;
-          updateProducts(info);
+          // updateProducts(info);
         }}
         disabled={!updateMode}
       />
@@ -24,7 +25,7 @@ const ProductInfo = ({ productData, updateProducts, remove }) => {
         value={info.description}
         onChange={(e) => {
           info.description = e.target.value;
-          updateProducts(info);
+          // updateProducts(info);
         }}
         disabled={!updateMode}
       />
@@ -33,7 +34,7 @@ const ProductInfo = ({ productData, updateProducts, remove }) => {
         value={info.categoryGroup}
         onChange={(e) => {
           info.categoryGroup = e.target.value;
-          updateProducts(info);
+          // updateProducts(info);
         }}
         disabled={!updateMode}
       >
@@ -48,7 +49,7 @@ const ProductInfo = ({ productData, updateProducts, remove }) => {
           value={info.price}
           onChange={(e) => {
             info.price = e.target.value;
-            updateProducts(info);
+            // updateProducts(info);
           }}
           disabled={!updateMode}
         />
@@ -58,15 +59,21 @@ const ProductInfo = ({ productData, updateProducts, remove }) => {
         type="file"
         checked={info.file}
         onChange={(e) => {
-          info.file = e.target.value;
-          updateProducts(info);
+          info.fileName = e.target.value;
+          info.file = e.target.files[0]
+          // setMenuImage(e.target.files)
+          // updateProducts(info);
         }}
         disabled={!updateMode}
       />
       <div className={styles.btns}>
         <button
           className={styles.edit}
-          onClick={() => setUpdateMode(!updateMode)}
+          onClick={() => {
+            updateMode ? addToUpdateProductsArr(info) : null
+            //push the data to an array
+            setUpdateMode(!updateMode) //Disabling edit mode
+          }}
         >
           {updateMode ? "Save" : "Edit"}
         </button>

@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import MenuItem from "@/components/MenuItem/MenuItem";
 import styles from "./menu.module.css";
 
+
 export const Menu = () => {
   let [menuItems, setMenuItems] = useState([]);
+
 
   useEffect(() => {
     fetch("http://localhost:3000/api/menuItem")
@@ -12,13 +14,6 @@ export const Menu = () => {
       .then((data) => setMenuItems(data.data))
       .catch((err) => console.log(err.message));
   }, []);
-
-  const getImgSrc = (itemName) => {
-    let imgSrc = "/images/";
-    imgSrc += itemName.toLowerCase().replaceAll(" ", "-");
-    imgSrc += ".jpg";
-    return imgSrc;
-  };
 
   return (
     <div className={styles.page}>
@@ -37,7 +32,7 @@ export const Menu = () => {
                   <MenuItem
                     key={item.id}
                     id={item.id}
-                    imgSrc={getImgSrc(item.name)}
+                    imgSrc={item.image}
                     imgAlt="img-menu-item"
                     name={item.name}
                     description={item.description}

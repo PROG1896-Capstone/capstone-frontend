@@ -86,7 +86,7 @@ model OrderItem {
 model Order {
   id         Int         @id @default(autoincrement())
   userId     String
-  Status     String      @default("Submitted")
+  status     String      @default("Submitted")
   insertedAt DateTime    @default(now())
   updatedAt  DateTime?   @updatedAt
   user       User        @relation(fields: [userId], references: [id])

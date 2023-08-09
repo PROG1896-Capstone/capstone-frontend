@@ -3,11 +3,12 @@ import { writeFile } from "fs/promises";
 import path from "path";
 
 const imageExtensions = ["image/jpg", "image/png", "image/jpeg"];
-const imageDir = "/src/public/images";
+const imageDir = "/images";
 
-const saveImage = async (image, filename) => {
+const saveImage = async (image, filename) => {  
   const imageExt = image.type.split("/").pop();
-  const imageName = `${Date.now()}-${filename.trim()}.${imageExt}`;
+  const imageName = `${Date.now()}-${filename.toLowerCase().replace(" ", "-")}.${imageExt}`;
+  console.log(imageName)
   try {
     if (!imageExtensions.includes(image.type)) {
       return { error: "Not an image!" };
@@ -17,7 +18,7 @@ const saveImage = async (image, filename) => {
     }
     const bytes = await image.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const imagePath = path.join(process.cwd(), imageDir, imageName);
+    const imagePath = path.join(process.cwd(),'/public', imageDir, imageName);
     await writeFile(imagePath, buffer);
     return imageName;
   } catch (error) {
@@ -77,14 +78,14 @@ const getAllMenuItems = async () => {
 
 const createMenuItem = async (name, desc, price, category, imageName) => {
   try {
-    // const filename = await saveImage(image, name)
+    const filename = await saveImage(image, name)
     const menuItem = await prisma.menuItem.create({
       data: {
         name: name,
         description: desc,
         price: price,
         categoryGroup: category,
-        // image: `${imageDir}/${filename}`
+        //image: `${imageDir}/${filename}`
         image: `${imageDir}/${imageName}`,
       },
     });
@@ -94,10 +95,9 @@ const createMenuItem = async (name, desc, price, category, imageName) => {
   }
 };
 
-const updateMenuItem = async (id, name, desc, price, category, imageName) => {
-  console.log(id, name, desc, price, category);
+const updateMenuItem = async (id, name, desc, price, category, file) => {
   try {
-    // const filename = await saveImage(image, name)
+    const filename = await saveImage(file, name)
     const menuItem = await prisma.menuItem.update({
       where: { id: parseInt(id) },
       data: {
@@ -105,8 +105,8 @@ const updateMenuItem = async (id, name, desc, price, category, imageName) => {
         description: desc,
         price: price,
         categoryGroup: category,
-        // image: `${imageDir}/${filename}`
-        image: `${imageDir}/${imageName}`,
+        image: `${imageDir}/${filename}`
+        //image: `${imageDir}/${imageName}`,
       },
     });
     return menuItem;

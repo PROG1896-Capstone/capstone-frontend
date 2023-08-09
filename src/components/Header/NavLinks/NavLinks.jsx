@@ -4,8 +4,11 @@ import Image from "next/image";
 import iconCart from "@/assets/icon-cart.svg";
 import iconAccount from "@/assets/icon-account.svg";
 import styles from "./navLinks.module.css";
+import { signOut,useSession } from "next-auth/react";
+
 
 const NavLinks = ({ className }) => {
+  const { data: session, status } = useSession();
   const textLinks = [
     {
       href: "/menu",
@@ -28,7 +31,7 @@ const NavLinks = ({ className }) => {
       key: "header_link_cart",
     },
     {
-      href: "/login",
+      href: session?.user?.email ? "/profile" : "/login",
       label: (
         <Image className={styles.icon} src={iconAccount} alt="icon-account" />
       ),
@@ -59,6 +62,18 @@ const NavLinks = ({ className }) => {
         ))}
       </div>
       <div className={styles.icon_links}>
+      {session?.user.role ? (
+          <Link
+          className={styles.link}
+          href={"/admin/employees"}
+          onClick={() => setCurrentPath("/admin/employees")}
+          key={"header_link_Admin"}
+        >
+          {"Admin"}
+        </Link>
+        ) : <></>}
+      </div>
+      <div className={styles.icon_links}>
         {iconLinks.map((link) => (
           <Link
             className={styles.link}
@@ -69,6 +84,15 @@ const NavLinks = ({ className }) => {
             {link.label}
           </Link>
         ))}
+      </div>
+      <div className={styles.icon_links}>
+      {session?.user ? (
+          <>
+            <button className={styles.btn} onClick={() => signOut({callbackUrl: '/'})}>
+              Sign Out
+            </button>
+          </>
+        ) : <></>}
       </div>
     </nav>
   );

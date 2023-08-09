@@ -15,7 +15,7 @@ export const MenuItem = ({ id, imgSrc, imgAlt, name, description, price }) => {
       return present;
     };
 
-    const newItem = { id: id, name: name, price: price, quantity: 1 };
+    const newItem = { menuItemId: id, name: name, price: price, quantity: 1, note: ""};
 
     if (!cartItems) {
       cartItems = [newItem];
