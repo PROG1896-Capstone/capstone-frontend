@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "./previousOrder.module.css";
 
-const PreviousOrder = ({ items, price }) => {
+const PreviousOrder = ({ items }) => {
   const [orderItems, setOrderItems] = useState([]);
+  const [orderPrice, setOrderPrice] = useState(0);
 
   useEffect(() => {
     let newOrderItems = [];
+    let newPrice = 0;
 
     items.map((item) => {
       fetch(`http://localhost:3000/api/menuItem?itemId=${item.menuItemId}`)
@@ -17,8 +19,10 @@ const PreviousOrder = ({ items, price }) => {
               {item.quantity}x {data.data.name}
             </h4>,
           ];
-
           setOrderItems(newOrderItems);
+
+          newPrice += item.quantity * data.data.price;
+          setOrderPrice(newPrice);
         })
         .catch((err) => console.log(err));
     });
@@ -28,7 +32,7 @@ const PreviousOrder = ({ items, price }) => {
     <div className={styles.order}>
       <div className={styles.container}>
         <div className={styles.items}>{orderItems}</div>
-        <h4 className={styles.total}>Total: ${price}</h4>
+        <h4 className={styles.total}>Total: ${orderPrice}</h4>
       </div>
       <button className={styles.btn}>Reorder</button>
     </div>

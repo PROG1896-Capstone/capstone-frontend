@@ -69,11 +69,7 @@ const Profile = () => {
       <div className={styles.orders}>
         <h3 className={styles.subheading}>Previous Orders</h3>
         {orders.map((order) => (
-          <PreviousOrder
-            items={order.orderItems}
-            price={order.price}
-            key={order.id}
-          />
+          <PreviousOrder items={order.orderItems} key={order.id} />
         ))}
       </div>
     </div>
