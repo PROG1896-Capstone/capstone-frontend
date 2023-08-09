@@ -1,70 +1,31 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getSession } from "next-auth/react";
 import PreviousOrder from "@/components/PreviousOrder/PreviousOrder";
 import styles from "./profile.module.css";
 
 const Profile = () => {
-  const previousOrders = [
-    {
-      id: 1,
-      items: [
-        {
-          name: "Beef Burger",
-          quantity: 1,
-        },
-        {
-          name: "Coke Soda",
-          quantity: 1,
-        },
-        {
-          name: "Seafood Pasta",
-          quantity: 1,
-        },
-      ],
-      price: 20,
-    },
-    {
-      id: 2,
-      items: [
-        {
-          name: "Beef Burger",
-          quantity: 1,
-        },
-        {
-          name: "Coke Soda",
-          quantity: 1,
-        },
-        {
-          name: "Seafood Pasta",
-          quantity: 1,
-        },
-      ],
-      price: 20,
-    },
-    {
-      id: 3,
-      items: [
-        {
-          name: "Beef Burger",
-          quantity: 1,
-        },
-        {
-          name: "Coke Soda",
-          quantity: 1,
-        },
-        {
-          name: "Seafood Pasta",
-          quantity: 1,
-        },
-      ],
-      price: 20,
-    },
-  ];
+  const [orders, setOrders] = useState([]);
 
   const [updateMode, setUpdateMode] = useState(false);
 
   const [name, setName] = useState("Name");
   const [email, setEmail] = useState("Email");
+
+  const getOrders = async () => {
+    const session = await getSession();
+    console.log(session);
+
+    session &&
+      fetch(`http://localhost:3000/api/order?userId=${session.user.id}`)
+        .then((response) => response.json())
+        .then((data) => setOrders(data.order))
+        .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -107,9 +68,9 @@ const Profile = () => {
       </div>
       <div className={styles.orders}>
         <h3 className={styles.subheading}>Previous Orders</h3>
-        {previousOrders.map((order) => (
+        {orders.map((order) => (
           <PreviousOrder
-            items={order.items}
+            items={order.orderItems}
             price={order.price}
             key={order.id}
           />
