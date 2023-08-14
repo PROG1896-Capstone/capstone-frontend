@@ -50,7 +50,7 @@ const AdminMenu = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("");
+          console.log(data);
         })
         .catch((err) => {
           console.log(err.message);
@@ -60,20 +60,22 @@ const AdminMenu = () => {
   };
 
   const removeItem = (id) => {
-    const items = products;
-    const result = items.filter((item) => item.id !== id);
-    setProducts(result);
+    fetch(`http://localhost:3000/api/menuItem?itemId=${id}`, {
+      method: "DELETE",
+      
+    }).then(response=>response.json())
+    .catch(err=>console.log(err.message))
   };
 
   const addProduct = () => {
     fetch("http://localhost:3000/api/menuItem", {
       method: "POST",
       body: JSON.stringify({
-        name: "Name of product",
-        description: "Description of product",
-        categoryGroup: "burger",
-        price: 20,
-        image: "img-menu-item.png",
+        name: "BLT",
+        description: "Bacon, Lettuce and Tomato",
+        categoryGroup: "Sandwich",
+        price: 14,
+        image: "blt.jpg",
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",

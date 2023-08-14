@@ -78,15 +78,15 @@ const getAllMenuItems = async () => {
 
 const createMenuItem = async (name, desc, price, category, imageName) => {
   try {
-    const filename = await saveImage(image, name)
+    // const filename = await saveImage(image, name)
     const menuItem = await prisma.menuItem.create({
       data: {
         name: name,
         description: desc,
         price: price,
         categoryGroup: category,
-        //image: `${imageDir}/${filename}`
-        image: `${imageDir}/${imageName}`,
+        image: `${imageDir}/${imageName}`
+        //image: `${imageDir}/${imageName}`,
       },
     });
     return menuItem;

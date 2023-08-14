@@ -22,8 +22,15 @@ const Cart = () => {
     localStorage.setItem("subtotal", JSON.stringify(newSubtotal));
   };
 
-  const removeItem = (id) => {
-    const newItems = cartItems.filter((item) => item.id !== id);
+  const removeItem = (index) => {
+    const halfBeforeTheUnwantedElement = cartItems.slice(0, index);
+
+    const halfAfterTheUnwantedElement = cartItems.slice(index + 1);
+
+    const newItems = halfBeforeTheUnwantedElement.concat(
+      halfAfterTheUnwantedElement
+    );
+
     setCartItems(newItems);
 
     localStorage.setItem("cartItems", JSON.stringify(newItems));
@@ -71,14 +78,14 @@ const Cart = () => {
       <div className={styles.container}>
         <div className={styles.cart}>
           <h1 className={styles.heading}>Cart</h1>
-          {cartItems.map((item) => (
+          {cartItems.map((item,index) => (
             <CartItem
               id={item.id}
               name={item.name}
               price={item.price}
               savedQuantity={item.quantity}
               addSubtotal={addSubtotal}
-              remove={() => removeItem(item.id)}
+              remove={() => removeItem(index)}
               key={`${item.id}_${item.name}`}
             />
           ))}
