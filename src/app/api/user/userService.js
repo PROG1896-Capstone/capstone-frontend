@@ -34,12 +34,20 @@ export const signIn = async (userEmail, userPassword) => {
     );
 
     if (userCredentialsCorrect){
+      if (existingUser.employee.length == 0){
+        return {
+          id: existingUser.id,
+          name: existingUser.name,
+          email: existingUser.email,
+        };
+      }
       return {
         id: existingUser.id,
         name: existingUser.name,
         email: existingUser.email,
         role: existingUser.employee[0].role
       };
+
     }
 
     throw new Error("Incorrect credentials");
